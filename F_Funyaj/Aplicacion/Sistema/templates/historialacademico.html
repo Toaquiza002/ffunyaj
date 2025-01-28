@@ -1,0 +1,388 @@
+{% extends "./administrador.html" %}
+{% block contenido %}
+{% load static %}
+<body>
+   <br><br><br><br>
+   <center><h1 style="font-family: 'Times New Roman', serif;">Detalle Académico del Estudiante</h1></center>
+   <div class="row">
+       <div class="col-md-11 text-end">
+           <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addHistorialModal">
+               <i class="fa fa-plus-circle fa-1x"></i> Agregar Historial Académico
+           </a>
+       </div>
+   </div><br>
+
+   <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-10">
+           {% if academico %}
+               <table class="table custom-table" id="miTabla">
+                   <thead class="table-dark">
+                       <tr>
+                           <th>N°.</th>
+                           <th>Estudiantes</th>
+                           <th>Universidad</th>
+                           <th>Campus</th>
+                           <th>Semestre</th>
+                           <th>Residencia</th>
+                           <th>Acciones</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for historial in academico %}
+                           <tr>
+                               <td>{{ forloop.counter }}</td>
+                               <td>{{ historial.estudiante }}</td>
+                               <td>{{ historial.universidad }}</td>
+                               <td>{{ historial.campus }}</td>
+                               <td>{{ historial.semestre }}</td>
+                               <td>{{ historial.residencia}}</td>
+                               <td>
+                                   <a href="javascript:void(0)" onclick="eliminarHistorial('/eliminarHistorial/{{ historial.id }}');" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                   <a href="javascript:void(0);" onclick="mostrarModalEditar({{ historial.id }},{{ historial.estudiante.id }},{{ historial.universidad.id }},'{{ historial.semestre }}','{{ historial.campus }}','{{ historial.residencia }}')" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                               </td>
+                           </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           {% else %}
+               <br><br><br><br><p class="text-center display-7">No se ha registrado ningún dato <i class="fa-solid fa-circle-xmark"></i></p>
+           {% endif %}
+       </div>
+   </div>
+
+   <!-- Modal para agregar historial académico -->
+   <div class="modal fade" id="addHistorialModal" tabindex="-1" aria-labelledby="addHistorialModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="addHistorialModalLabel">Agregar Historial Académico</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="/agregarhistorial/" method="post" enctype="multipart/form-data" id="miFormulario">
+                     {% csrf_token %}
+                     <label for="actividad" class="form-label">Seleccione un estudiante:</label>
+                     <select class="form-control" name="id_estudiante" id="id_estudiante" required>
+                         <option value="">--Estudiante--</option>
+                         {% for estudiante in estudiantes %}
+                             <option value="{{ estudiante.id }}">{{ estudiante.nombres }} {{ estudiante.apellidos }}</option>
+                         {% endfor %}
+                     </select>
+                     <br>
+                     <label for="actividad" class="form-label">Seleccione una universidad:</label>
+                     <select class="form-control" name="id_universidad" id="id_universidad" required>
+                         <option value="">--Universidad--</option>
+                         {% for listuniversidad in universidad %}
+                             <option value="{{ listuniversidad.id }}">{{ listuniversidad.nombre }} </option>
+                         {% endfor %}
+                     </select>
+                     <br>
+                     <div class="mb-3">
+                         <label for="semestre" class="form-label">Semestre:</label>
+                         <select class="form-control" id="semestre" name="semestre" required>
+                             <option value="">--Seleccione Semestre--</option>
+                             <option value="Nivelación">Nivelación</option>
+                             <option value="1° Semestre">1° Semestre</option>
+                             <option value="2° Semestre">2° Semestre</option>
+                             <option value="3° Semestre">3° Semestre</option>
+                             <option value="4° Semestre">4° Semestre</option>
+                             <option value="5° Semestre">5° Semestre</option>
+                             <option value="6° Semestre">6° Semestre</option>
+                             <option value="7° Semestre">7° Semestre</option>
+                             <option value="8° Semestre">8° Semestre</option>
+                             <option value="9° Semestre">9° Semestre</option>
+                             <option value="10° Semestre">10° Semestre</option>
+                         </select>
+                     </div>
+                     <div class="mb-3">
+                         <label for="campus" class="form-label">Campus:</label>
+                         <input type="text" class="form-control" id="campus" name="campus" required>
+                     </div>
+                     <div class="mb-3">
+                         <label for="residencia" class="form-label">Residencia:</label>
+                         <input type="text" class="form-control" id="residencia" name="residencia"  required>
+                     </div>
+                       <center><button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>&nbsp;&nbsp Guardar Datos</button></center>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <!-- Modal para editar historial académico -->
+   <div class="modal fade" id="editHistorialModal" tabindex="-1" aria-labelledby="editHistorialModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="editHistorialModalLabel">Editar Historial Académico</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="/editar_historial/{{ historial.id }}/" method="post" enctype="multipart/form-data" id="editHistorialFormulario">
+                       {% csrf_token %}
+                       <input type="hidden" id="historial_id" name="id" value="">
+
+                       <div class="mb-3">
+                           <label for="edit_estudiante" class="form-label">Estudiante:</label>
+                           <select class="form-control" name="estudiante" id="edit_estudiante" required>
+                               <option value="">--Seleccionar Estudiante--</option>
+                               {% for estudiante in estudiantes %}
+                                   <option value="{{ estudiante.id }}" {% if historial.estudiante.id == estudiante.id %} selected {% endif %}>
+                                       {{ estudiante.nombres }} {{ estudiante.apellidos }}
+                                   </option>
+                               {% endfor %}
+                           </select>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_universidad" class="form-label">Universidad:</label>
+                           <select class="form-control" name="universidad" id="edit_universidad" required>
+                               <option value="">--Seleccionar Universidad--</option>
+                               {% for universidad in universidad %}
+                                   <option value="{{ universidad.id }}" {% if historial.universidad.id == universidad.id %} selected {% endif %}>
+                                       {{ universidad.nombre }}
+                                   </option>
+                               {% endfor %}
+                           </select>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_semestre" class="form-label">Semestre:</label>
+                           <select class="form-control" id="edit_semestre" name="semestre" required>
+                               <option value="Nivelación" {% if historial.semestre == 'Nivelación' %} selected {% endif %}>Nivelación</option>
+                               <option value="1° Semestre" {% if historial.semestre == '1° Semestre' %} selected {% endif %}>1° Semestre</option>
+                               <option value="2° Semestre" {% if historial.semestre == '2° Semestre' %} selected {% endif %}>2° Semestre</option>
+                               <option value="3° Semestre" {% if historial.semestre == '3° Semestre' %} selected {% endif %}>3° Semestre</option>
+                               <option value="4° Semestre" {% if historial.semestre == '4° Semestre' %} selected {% endif %}>4° Semestre</option>
+                               <option value="5° Semestre" {% if historial.semestre == '5° Semestre' %} selected {% endif %}>5° Semestre</option>
+                               <option value="6° Semestre" {% if historial.semestre == '6° Semestre' %} selected {% endif %}>6° Semestre</option>
+                               <option value="7° Semestre" {% if historial.semestre == '7° Semestre' %} selected {% endif %}>7° Semestre</option>
+                               <option value="8° Semestre" {% if historial.semestre == '8° Semestre' %} selected {% endif %}>8° Semestre</option>
+                               <option value="9° Semestre" {% if historial.semestre == '9° Semestre' %} selected {% endif %}>9° Semestre</option>
+                               <option value="10° Semestre" {% if historial.semestre == '10° Semestre' %} selected {% endif %}>10° Semestre</option>
+                           </select>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_campus" class="form-label">Campus:</label>
+                           <input type="text" class="form-control" id="edit_campus" name="campus" required>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_residencia" class="form-label">Residencia:</label>
+                           <input type="text" class="form-control" id="edit_residencia" name="residencia" required>
+                       </div>
+
+                       <center><button type="submit" class="btn btn-info"> <i class="fa-solid fa-arrow-rotate-right"></i>&nbsp;&nbsp;Actualizar Datos</button></center>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+
+<script>
+   function mostrarModalEditar(id, estudiante_id, universidad_id, semestre, campus, residencia) {
+       // Asignar valores a los campos del formulario en el modal
+       document.getElementById('historial_id').value = id;
+       document.getElementById('edit_estudiante').value = estudiante_id;
+       document.getElementById('edit_universidad').value = universidad_id;
+       document.getElementById('edit_semestre').value = semestre;
+       document.getElementById('edit_campus').value = campus;
+       document.getElementById('edit_residencia').value = residencia;
+
+       // Cambiar la URL del formulario para incluir el ID del historial académico
+       const form = document.getElementById('editHistorialFormulario');
+       form.action = '/editar_historial/' + id + '/';
+
+       // Mostrar el modal
+       var myModal = new bootstrap.Modal(document.getElementById('editHistorialModal'));
+       myModal.show();
+   }
+</script>
+
+<script type="text/javascript">
+    function eliminarHistorial(url){
+      iziToast.question({
+          timeout: 15000,
+          close: true,
+          overlay: true,
+          displayMode: 'once',
+          id: 'question',
+          zindex: 999,
+          title: 'CONFIRMACIÓN',
+          message: '¿Está seguro de <br> eliminar el dato <br> seleccionado?',
+          position: 'center',
+          buttons: [
+              ['<button><b>SI</b></button>', function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                  window.location.href=url;
+              }, true],
+              ['<button>NO</button>', function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              }],
+          ]
+      });
+    }
+</script>
+
+<script type="text/javascript">
+   $('#miTabla').DataTable( {
+      dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'pdfHtml5',
+              messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+          },
+          'print',
+          'csv'
+      ],
+      language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+      }
+    });
+</script>
+
+<script type="text/javascript">
+//SOLO LETRAS
+    $.validator.addMethod("lettersOnly", function(value, element) {
+        return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+    }, "Este espacio debe contener solo letras y espacios.");
+//validar la cédula ecuatoriana
+    $.validator.addMethod("cedulaEcuador", function(value, element) {
+        var cedula = value.trim();
+        if (cedula.length !== 10) return false;
+        var cedulaArray = cedula.split('').map(Number);
+        var provincia = cedulaArray[0] * 10 + cedulaArray[1];
+        if (provincia < 1 || provincia > 24) return false;
+        var suma = 0;
+        for (var i = 0; i < 9; i++) {
+            var digito = cedulaArray[i];
+            if (i % 2 === 0) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+            }
+            suma += digito;
+        }
+        var digitoVerificador = cedulaArray[9];
+        var verificadorCalculado = 10 - (suma % 10);
+        if (verificadorCalculado === 10) verificadorCalculado = 0;
+        return digitoVerificador === verificadorCalculado;
+    }, "La cédula ingresada es inválida.");
+//correo
+    $.validator.addMethod("correoValido", function(value, element) {
+        var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+        return this.optional(element) || regex.test(value);
+    }, "Por favor ingrese un correo válido");
+    $("#miFormulario").validate({
+        rules: {
+          "id_estudiante": {
+              required: true
+          },
+          "id_universidad": {
+              required: true
+          },
+          "semestre": {
+              required: true
+          },
+          "campus": {
+              required: true,
+              lettersOnly: true
+            },
+          "residencia": {
+              required: true,
+              lettersOnly: true
+          }
+      },
+      messages: {
+        "id_estudiante": {
+            required: "Campo Obligatorio*"
+        },
+        "id_universidad": {
+            required: "Campo Obligatorio*"
+        },
+        "semestre": {
+            required:  "Campo Obligatorio*"
+        },
+        "campus": {
+            required:  "Campo Obligatorio*"
+          },
+        "residencia": {
+            required:  "Campo Obligatorio*"
+        }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+//SOLO LETRAS
+    $.validator.addMethod("lettersOnly", function(value, element) {
+        return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+    }, "Este espacio debe contener solo letras y espacios.");
+//validar la cédula ecuatoriana
+    $.validator.addMethod("cedulaEcuador", function(value, element) {
+        var cedula = value.trim();
+        if (cedula.length !== 10) return false;
+        var cedulaArray = cedula.split('').map(Number);
+        var provincia = cedulaArray[0] * 10 + cedulaArray[1];
+        if (provincia < 1 || provincia > 24) return false;
+        var suma = 0;
+        for (var i = 0; i < 9; i++) {
+            var digito = cedulaArray[i];
+            if (i % 2 === 0) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+            }
+            suma += digito;
+        }
+        var digitoVerificador = cedulaArray[9];
+        var verificadorCalculado = 10 - (suma % 10);
+        if (verificadorCalculado === 10) verificadorCalculado = 0;
+        return digitoVerificador === verificadorCalculado;
+    }, "La cédula ingresada es inválida.");
+//correo
+    $.validator.addMethod("correoValido", function(value, element) {
+        var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+        return this.optional(element) || regex.test(value);
+    }, "Por favor ingrese un correo válido");
+    $("#editHistorialFormulario").validate({
+        rules: {
+            "id_estudiante": {
+                required: true
+            },
+            "id_universidad": {
+                required: true
+            },
+            "semestre": {
+                required: true
+            },
+            "campus": {
+                required: true,
+                lettersOnly: true
+              },
+            "residencia": {
+                required: true,
+                lettersOnly: true
+            }
+        },
+        messages: {
+          "id_estudiante": {
+              required: "Campo Obligatorio*"
+          },
+          "id_universidad": {
+              required: "Campo Obligatorio*"
+          },
+          "semestre": {
+              required:  "Campo Obligatorio*"
+          },
+          "campus": {
+              required:  "Campo Obligatorio*"
+            },
+          "residencia": {
+              required:  "Campo Obligatorio*"
+          }
+        }
+    });
+</script>
+<br><br><br>
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends "./administrador.html" %}
+{% block contenido %}
+{% load static %}
+<body>
+   <br><br><br><br>
+   <center><h1 style="font-family: 'Times New Roman', serif;"> Listado de Universidades</h1></center>
+   <div class="row">
+       <div class="col-md-11 text-end">
+           <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addUnivesidadModal">
+               <i class="fa fa-plus-circle fa-1x"></i> Agregar Datos
+           </a>
+       </div>
+   </div><br>
+
+   <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-10">
+           {% if universidad %}
+               <table class="table custom-table" id="miTabla">
+                   <thead class="table-dark">
+                       <tr>
+                           <th>ID</th>
+                           <th>Nombres de Universidad</th>
+                           <th>Dirección</th>
+                           <th>Acciones</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for listuniversidad in universidad %}
+                           <tr>
+                               <td>{{ forloop.counter }}</td>
+                               <td>{{ listuniversidad.nombre }}</td>
+                               <td>{{ listuniversidad.direccion }}</td>
+                               <td>
+                                  <a href="javascript:void(0)" onclick="eliminarUniversidad('/eliminarUniversidad/{{ listuniversidad.id }}');" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                      &nbsp;&nbsp;<a href="javascript:void(0)" onclick="mostrarModalEditar({{ listuniversidad.id }}, '{{ listuniversidad.nombre }}', '{{ listuniversidad.direccion }}')" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                              </td>
+                           </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           {% else %}
+               <br><br><br><br><p class="text-center">Esta sección no contiene datos</p>
+           {% endif %}
+       </div>
+   </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="addUnivesidadModal" tabindex="-1" aria-labelledby="addUnivesidadModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="addUnivesidadModalLabel">Agregar Universidad</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="/agregaruniversidad/" method="post" enctype="multipart/form-data" id="miFormulario">
+                       {% csrf_token %}
+                       <div class="mb-3">
+                           <label for="nombre" class="form-label">Nombres:</label>
+                           <input type="text" class="form-control" id="nombre" name="nombre" required>
+                       </div>
+                       <div class="mb-3">
+                           <label for="direccion" class="form-label">Dirección:</label>
+                           <input type="text" class="form-control" id="direccion" name="direccion" required>
+                       </div>
+                       <center><button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>&nbsp;&nbsp; Guardar Datos</button></center>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+
+      <!-- Modal para editar universidad -->
+      <div class="modal fade" id="editUnivesidadModal" tabindex="-1" aria-labelledby="editUnivesidadModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="editUnivesidadModalLabel">Editar Universidad</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="/editaruniversidad/" method="post" enctype="multipart/form-data" id="editFormulario">
+                          {% csrf_token %}
+                          <input type="hidden" id="universidad_id" name="id">
+                          <div class="mb-3">
+                              <label for="edit_nombre" class="form-label">Nombres:</label>
+                              <input type="text" class="form-control" id="edit_nombre" name="nombre" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="edit_direccion" class="form-label">Dirección:</label>
+                              <input type="text" class="form-control" id="edit_direccion" name="direccion" required>
+                          </div>
+                          <center><button type="submit" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i>&nbsp;&nbsp;Actualizar Datos</button></center>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <script>
+          function mostrarModalEditar(id, nombre, direccion) {
+              document.getElementById('universidad_id').value = id;
+              document.getElementById('edit_nombre').value = nombre;
+              document.getElementById('edit_direccion').value = direccion;
+              var myModal = new bootstrap.Modal(document.getElementById('editUnivesidadModal'));
+              myModal.show();}
+      </script>
+
+
+      <script type="text/javascript">
+        function mostrarModalEditar(id, nombre, direccion) {
+            document.getElementById('universidad_id').value = id;
+            document.getElementById('edit_nombre').value = nombre;
+            document.getElementById('edit_direccion').value = direccion;
+            document.getElementById('editFormulario').action = '/editaruniversidad/' + id + '/';
+            var myModal = new bootstrap.Modal(document.getElementById('editUnivesidadModal'));
+            myModal.show();}
+      </script>
+
+      <script type="text/javascript">
+          function eliminarUniversidad(url){
+            iziToast.question({
+                timeout: 5000,
+                close: true,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'CONFIRMACIÓN',
+                message: '¿Está seguro de <br> eliminar el dato <br> seleccionado?',
+                position: 'center',
+                buttons: [
+                    ['<button><b>SI</b></button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        window.location.href=url;
+                    }, true],
+                    ['<button>NO</button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }],
+                ]
+            });
+          }
+      </script>
+
+      <script type="text/javascript">
+         $('#miTabla').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+                },
+                'print',
+                'csv'
+            ],
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+            }
+          });
+      </script>
+      <script type="text/javascript">
+            $.validator.addMethod("lettersOnly", function(value, element) {
+            return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+          }, "Este espacio debe contener solo letras y espacios.");
+           $("#miFormulario").validate({
+             rules:{
+                "nombre":{
+                  required:true,
+                  lettersOnly: true
+                },
+                "direccion":{
+                  required:true,
+                  lettersOnly: true
+                }
+             },
+             messages: {
+                  "nombre": {
+                      required: "Campo Obligatorio*"
+                  },
+                  "direccion": {
+                      required: "Campo Obligatorio*"
+                  }
+              }
+           });
+        </script>
+
+
+        <script type="text/javascript">
+              $.validator.addMethod("lettersOnly", function(value, element) {
+              return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+            }, "Este espacio debe contener solo letras y espacios.");
+             $("#editFormulario").validate({
+               rules:{
+                  "nombre":{
+                    required:true,
+                    lettersOnly: true
+                  },
+                  "direccion":{
+                    required:true,
+                    lettersOnly: true
+                  }
+               },
+               messages: {
+                    "nombre": {
+                        required: "Campo Obligatorio*"
+                    },
+                    "direccion": {
+                        required: "Campo Obligatorio*"
+                    }
+                }
+             });
+          </script>
+<br><br><br><br>
+
+{% endblock %}

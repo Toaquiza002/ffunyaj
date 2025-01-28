@@ -1,0 +1,86 @@
+{% extends "./administrador.html" %}
+{% block contenido %}
+{% load static %}
+
+
+<style>
+       .custom-table th, .custom-table td {
+           text-align: center;
+       }
+       .custom-table {
+           margin: 0 auto;
+           width: 100%;
+       }
+
+       table{
+         border: 3px solid black !important;
+
+       }
+       .dt-button {padding: 5px 10px; border: none; border-radius: 3px; color: white;cursor: pointer; margin: 5px;}
+       .dt-button.buttons-pdf {background-color: #d9534f;}
+       .dt-button.buttons-print {background-color: #5bc0de;}
+       .dt-button.buttons-csv {background-color: #5cb85c;}
+       .dt-button:hover {opacity: 0.8;}
+       .btn-outline-success{background-color: #5cb85c;}
+       .btn-outline-success .fa {color: black;}
+       .btn-danger {color: white; background-color: red; border-color: red;}
+
+
+   </style>
+
+<body>
+   <br><br><br><br>
+   <center><h1><i class="fa-solid fa-user-tie"></i> Administrador</h1></center>
+   <br>
+
+   <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-10">
+           {% if admin %}
+               <table class="table custom-table" id="miTabla">
+                   <thead class="table-dark">
+                       <tr>
+                           <th>ID</th>
+                           <th>Nombres:</th>
+                           <th>Apellidos:</th>
+                           <th>Teléfono:</th>
+                           <th>Correo:</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for listadmin in admin %}
+                           <tr>
+                               <td>{{ forloop.counter }}</td>
+                               <td>{{ listadmin.nombres }}</td>
+                               <td>{{ listadmin.apellidos }}</td>
+                               <td>{{ listadmin.telefono }}</td>
+                               <td>{{ listadmin.email }}</td>
+
+                           </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           {% else %}
+               <br><br><br><br><p class="text-center display-7">No se ha registrado ningún dato <i class="fa-solid fa-circle-xmark"></i></p>
+           {% endif %}
+       </div>
+   </div>
+<script type="text/javascript">
+   $('#miTabla').DataTable( {
+      dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'pdfHtml5',
+              messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+          },
+          'print',
+          'csv'
+      ],
+      language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'}
+    });
+</script>
+
+<br><br><br><br><br><br>
+
+{% endblock %}

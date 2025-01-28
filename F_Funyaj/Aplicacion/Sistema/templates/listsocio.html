@@ -1,0 +1,344 @@
+{% extends "./administrador.html" %}
+{% block contenido %}
+{% load static %}
+<body>
+   <br><br><br><br>
+   <center><h1 style="font-family: 'Times New Roman', serif;">Registro de Socios</h1></center>
+   <div class="row">
+       <div class="col-md-11 text-end">
+           <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addSocioModal">
+               <i class="fa fa-plus-circle fa-1x"></i> Registrar Socio
+           </a>
+       </div>
+   </div><br>
+
+   <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-10">
+           {% if socios %}
+               <table class="table custom-table" id="miTabla">
+                   <thead class="table-dark">
+                       <tr>
+                           <th>ID</th>
+                           <th>Nombres</th>
+                           <th>Apellidos</th>
+                           <th>Dirección</th>
+                           <th>Teléfono</th>
+                           <th>Correo</th>
+                           <th>Acciones</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for listsocio in socios %}
+                           <tr>
+                               <td>{{ forloop.counter }}</td>
+                               <td>{{ listsocio.nombre }}</td>
+                               <td>{{ listsocio.apellidos }}</td>
+                               <td>{{ listsocio.direccion }}</td>
+                               <td>{{ listsocio.telefono }}</td>
+                               <td>{{ listsocio.email }}</td>
+                               <td>
+                                   <a href="javascript:void(0)" onclick="eliminarSocio('/eliminarSocio/{{ listsocio.id }}');" class="btn btn-danger"><i class="fa-solid fa-trash"></i> </a>
+                                    <a href="javascript:void(0)" onclick="mostrarModalEditarSocio({{ listsocio.id }}, '{{ listsocio.nombre }}', '{{ listsocio.apellidos }}', '{{ listsocio.direccion }}', '{{ listsocio.telefono }}', '{{ listsocio.email }}');" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> </a>
+                               </td>
+                           </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           {% else %}
+               <br><br><br><br><p class="text-center">Esta sección no contiene datos</p>
+           {% endif %}
+       </div>
+   </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="addSocioModal" tabindex="-1" aria-labelledby="addSocioModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="addSocioModalLabel">Nuevo Registro de Socio</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="/agregarsocio/" method="post" enctype="multipart/form-data" id="miFormulario">
+                       {% csrf_token %}
+                       <div class="mb-3">
+                           <label for="nombre" class="form-label">Nombres:</label>
+                           <input type="text" class="form-control" id="nombre" name="nombre" required>
+                       </div>
+                       <div class="mb-3">
+                           <label for="apellidos" class="form-label">Apellidos:</label>
+                           <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                       </div>
+                       <div class="mb-3">
+                           <label for="direccion" class="form-label">Dirección:</label>
+                           <input type="text" class="form-control" id="direccion" name="direccion" required>
+                       </div>
+                       <div class="mb-3">
+                           <label for="telefono" class="form-label">Teléfono:</label>
+                           <input type="number" class="form-control" id="telefono" name="telefono" required>
+                       </div>
+                       <div class="mb-3">
+                           <label for="email" class="form-label">Correo:</label>
+                           <input type="email" class="form-control" id="email" name="email" required>
+                       </div>
+                       <center><button type="submit" class="btn btn-success"> <i class="fa-solid fa-floppy-disk"></i> &nbsp;&nbsp Guardar Datos</button></center>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- Modal para editar socio -->
+<div class="modal fade" id="editSocioModal" tabindex="-1" aria-labelledby="editSocioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSocioModalLabel">Editar Socio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para editar socio -->
+                <form action="/editarSocio/{{ socio.id }}/" method="post" enctype="multipart/form-data" id="editSocioFormulario">
+                    {% csrf_token %}
+                    <input type="hidden" id="socio_id" name="id" value="{{ socio.id }}">
+
+                    <div class="mb-3">
+                        <label for="edit_nombre" class="form-label">Nombres:</label>
+                        <input type="text" class="form-control" id="edit_nombre" name="nombre" value="{{ socio.nombre }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_apellidos" class="form-label">Apellidos:</label>
+                        <input type="text" class="form-control" id="edit_apellidos" name="apellidos" value="{{ socio.apellidos }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_direccion" class="form-label">Dirección:</label>
+                        <input type="text" class="form-control" id="edit_direccion" name="direccion" value="{{ socio.direccion }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_telefono" class="form-label">Teléfono:</label>
+                        <input type="number" class="form-control" id="edit_telefono" name="telefono" value="{{ socio.telefono }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_email" class="form-label">Correo:</label>
+                        <input type="email" class="form-control" id="edit_email" name="email" value="{{ socio.email }}" required>
+                    </div>
+
+                    <center><button type="submit" class="btn btn-info"><i class="fa-solid fa-arrows-rotate"></i> &nbsp;&nbsp Actualizar Datos</button></center>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Función para mostrar el modal y llenar los campos con los datos del socio
+    function mostrarModalEditarSocio(id, nombre, apellidos, direccion, telefono, email) {
+        // Asignar valores a los campos del formulario en el modal
+        document.getElementById('socio_id').value = id;
+        document.getElementById('edit_nombre').value = nombre;
+        document.getElementById('edit_apellidos').value = apellidos;
+        document.getElementById('edit_direccion').value = direccion;
+        document.getElementById('edit_telefono').value = telefono;
+        document.getElementById('edit_email').value = email;
+
+        // Cambiar la URL del formulario para incluir el ID del socio
+        const form = document.getElementById('editSocioFormulario');
+        form.action = '/editarSocio/' + id + '/';
+
+        // Mostrar el modal
+        var myModal = new bootstrap.Modal(document.getElementById('editSocioModal'));
+        myModal.show();
+    }
+</script>
+
+<script type="text/javascript">
+    function eliminarSocio(url){
+      iziToast.question({
+          timeout: 15000,
+          close: true,
+          overlay: true,
+          displayMode: 'once',
+          id: 'question',
+          zindex: 999,
+          title: 'CONFIRMACIÓN',
+          message: '¿Está seguro de <br> eliminar el dato <br> seleccionado?',
+          position: 'center',
+          buttons: [
+              ['<button><b>SI</b></button>', function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                  window.location.href=url;
+              }, true],
+              ['<button>NO</button>', function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              }],
+          ]
+      });
+    }
+</script>
+
+<script type="text/javascript">
+   $('#miTabla').DataTable( {
+      dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'pdfHtml5',
+              messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+          },
+          'print',
+          'csv'
+      ],
+      language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'}
+    });
+</script>
+
+
+
+<script type="text/javascript">
+  // Validar correo electrónico
+  $.validator.addMethod("correoValido", function(value, element) {
+      var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un correo válido");
+
+  // Solo letras
+  $.validator.addMethod("lettersOnly", function(value, element) {
+      return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+  }, "Este espacio debe contener solo letras y espacios.");
+
+  // Validar teléfono de Ecuador (debe empezar con 09 y tener 10 dígitos)
+  $.validator.addMethod("telefonoEcuador", function(value, element) {
+      var regex = /^09\d{8}$/; // Inicia con 09 y tiene 8 dígitos más
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un número de teléfono válido de Ecuador que comience con 09.");
+
+  $("#miFormulario").validate({
+    rules: {
+        "nombre": {
+            required: true,
+            lettersOnly: true
+        },
+        "apellidos": {
+            required: true,
+            lettersOnly: true
+        },
+        "direccion": {
+            required: true,
+            lettersOnly: true
+        },
+        "telefono": {
+            required: true,
+            digits: true,
+            minlength: 10,
+            maxlength: 10,
+            telefonoEcuador: true // Aquí se valida el teléfono con la nueva regla
+        },
+        "email": {
+            required: true,
+            email: true,
+            correoValido: true
+        }
+    },
+    messages: {
+      "nombre": {
+          required: "Campo Obligatorio*"
+      },
+      "apellidos": {
+          required: "Campo Obligatorio*"
+      },
+      "direccion": {
+          required: "Campo Obligatorio*"
+      },
+      "telefono": {
+        required: "Campo Obligatorio*",
+        digits: "Ingrese solo dígitos.",
+        minlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+        maxlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+        telefonoEcuador: "El número debe comenzar con 09 y tener 10 dígitos."
+      },
+      "email": {
+        required: "Campo Obligatorio*",
+        email: "Ingrese una dirección de correo electrónico válida.",
+        correoValido: "Por favor ingrese un correo válido"
+      }
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  // Validar correo electrónico
+  $.validator.addMethod("correoValido", function(value, element) {
+      var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un correo válido");
+
+  // Solo letras
+  $.validator.addMethod("lettersOnly", function(value, element) {
+      return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+  }, "Este espacio debe contener solo letras y espacios.");
+
+  // Validar teléfono de Ecuador (debe empezar con 09 y tener 10 dígitos)
+  $.validator.addMethod("telefonoEcuador", function(value, element) {
+      var regex = /^09\d{8}$/; // Inicia con 09 y tiene 8 dígitos más
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un número de teléfono válido de Ecuador que comience con 09.");
+
+  $("#editSocioFormulario").validate({
+    rules: {
+        "nombre": {
+            required: true,
+            lettersOnly: true
+        },
+        "apellidos": {
+            required: true,
+            lettersOnly: true
+        },
+        "direccion": {
+            required: true,
+            lettersOnly: true
+        },
+        "telefono": {
+            required: true,
+            digits: true,
+            minlength: 10,
+            maxlength: 10,
+            telefonoEcuador: true // Aquí se valida el teléfono con la nueva regla
+        },
+        "email": {
+            required: true,
+            email: true,
+            correoValido: true
+        }
+    },
+    messages: {
+      "nombre": {
+          required: "Campo Obligatorio*"
+      },
+      "apellidos": {
+          required: "Campo Obligatorio*"
+      },
+      "direccion": {
+          required: "Campo Obligatorio*"
+      },
+      "telefono": {
+        required:  "Campo Obligatorio*",
+        digits: "Ingrese solo dígitos.",
+        minlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+        maxlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+        telefonoEcuador: "El número debe comenzar con 09 y tener 10 dígitos."
+      },
+      "email": {
+        required: "Campo Obligatorio*",
+        email: "Ingrese una dirección de correo electrónico válida.",
+        correoValido: "Por favor ingrese un correo válido"
+      }
+    }
+  });
+</script>
+<br><br><br><br>
+
+{% endblock %}

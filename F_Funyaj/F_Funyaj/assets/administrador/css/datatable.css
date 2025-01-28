@@ -1,0 +1,73 @@
+/* Estilos para la tabla */
+.custom-table th, .custom-table td {
+    text-align: center;
+}
+
+.custom-table {
+    margin: 0 auto;
+    width: 100%;
+}
+
+table {
+    border: 3px solid black !important;
+}
+
+/* Estilos para los botones de DataTables */
+.dt-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.dt-button.buttons-pdf {
+    background-color: #B03A2E; /* Rojo oscuro */
+}
+
+.dt-button.buttons-print {
+    background-color: #2C3E50; /* Azul oscuro */
+}
+
+.dt-button.buttons-csv {
+    background-color: #2C6B2F; /* Verde oscuro */
+}
+
+.dt-button:hover {
+    opacity: 0.8; /* Opacidad al pasar el cursor */
+}
+
+/* Estilos para el botón .btn-outline-success */
+.btn-outline-success {
+    background-color: #A3D8FF; /* Celeste */
+    color: black; /* Texto negro */
+    border-color: #A3D8FF; /* Borde celeste */
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.btn-outline-success:hover {
+    background-color: #1E6F9F; /* Azul oscuro cuando se pasa el cursor */
+    border-color: #1E6F9F; /* Borde azul oscuro cuando se pasa el cursor */
+    color: white; /* Texto blanco al pasar el cursor */
+}
+
+.btn-outline-success .fa {
+    color: black; /* Íconos en negro */
+}
+
+/* Estilos para el botón de peligro */
+.btn-danger {
+    color: white;
+    background-color: #dc3545; /* Rojo más claro */
+    border-color: #dc3545;
+}
+
+#miTabla {
+font-family: 'Times New Roman', serif !important;
+}
+#miTabla td, #miTabla th {
+font-family: 'Times New Roman', serif !important;
+}

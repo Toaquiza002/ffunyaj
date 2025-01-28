@@ -1,0 +1,403 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="templatemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Importacion de jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <link rel="stylesheet" href="{% static 'css/principal.css' %}">
+  <!-- Importacion de jquery-validate -->
+  <script type="text/javascript"
+  src="{% static 'librerias/jquery-validate/jquery.validate.js' %}">
+  </script>
+
+    <!-- IMPORTANDO fontawasome-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Importacion de sweetalert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.min.css">
+
+  <!-- Importacion de DataTables -->
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js">
+  </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>Fundación FUNYAJ</title>
+
+    <link rel="icon" type="image/x-icon" href="../assets/images/FUNYAJ/icono.png" />
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+       <link rel="stylesheet" href="../assets/css/fontawesome.css">
+       <link rel="stylesheet" href="../assets/css/templatemo-snapx-photography.css">
+       <link rel="stylesheet" href="../assets/css/owl.css">
+       <link rel="stylesheet" href="../assets/css/animate.css">
+       <link rel="stylesheet" href="../assets/css/flex-slider.css">
+       <link rel="stylesheet" href="../assets/js/principal.js">
+
+       <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+   <!--
+
+TemplateMo 576 SnapX Photography
+
+https://templatemo.com/tm-576-snapx-photography
+
+-->
+  </head>
+
+<body>
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+
+                    <!-- ***** Logo Start ***** -->
+                    <a href="/" class="logo">
+                        <img src="../assets/images/FUNYAJ/logo.png" alt="FUNYAJ">
+                    </a>
+
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="/funyaj/" class="active">FUNYAJ</a></li>
+                        <li class="has-sub">
+                            <a href="javascript:void(0)" aria-expanded="false" class="active">PROYECTOS/EVENTOS</a>
+                            <ul class="sub-menu">
+                                <li><a href="/deporte/"> <i class="fa-solid fa-medal"></i> &nbsp;Deportes </a></li>
+                                <!--li><a href="/musica/"><i class="fa-solid fa-guitar"></i> &nbsp; Musica</a></li-->
+                                <li><a href="/becarios/"><i class="fa-solid fa-book-open-reader"></i>&nbsp; Becarios</a></li>
+                                <li><a href="/salud/"><i class="fa-solid fa-briefcase-medical"></i> &nbsp; Salud</a></li>
+                                <li> <a href="/turismo/"><i class="fa-solid fa-person-hiking"></i> &nbsp;Turismo</a> </li>
+                                </ul>
+                        </li>
+
+                        <li class="has-sub">
+                            <a href="javascript:void(0)" aria-expanded="false" class="active">Se parte</a>
+                            <ul class="sub-menu">
+                                <li><a href="/separte/"> <i class="fa-solid fa-handshake-angle"></i> &nbsp;Voluntarios</a></li>
+                                <li><a href="/registrobeca/"> <i class="fa-solid fa-users"></i> &nbsp; Becas</a></li>
+                              </ul>
+                        </li>
+                        <li><a href="/contactos/">Contactos</a></li>
+
+                    </ul>
+                    <div class="border-button">
+                      <a id="modal_trigger" href="/accounts/login/?next=/dashboard/" class="sign-in-up"><i class="fa fa-user"></i>&nbsp; &nbsp; Sign In</a>
+                      </div>
+
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+
+
+            </div>
+
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+    </section>
+  </div>
+  {% block contenido %}
+
+
+
+  <!-- ***** Main Banner Area Start ***** -->
+  <div class="main-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+          <div class="header-text">
+            <h2>"Transformando <em>vidas</em> y construyendo un <em>futuro</em> mejor juntos"<em> </h2>
+            <p>¡Bienvenido a FUNYAJ! Aquí, nos dedicamos a transformar vidas y construir un futuro mejor para todos. Únete a nosotros en esta emocionante misión de hacer del mundo un lugar más justo y próspero. ¡Estamos encantados de tenerte con nosotros!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Main Banner Area End ***** -->
+
+
+  <section class="featured-items" id="featured-items">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/music.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/rodri.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/byron.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/deporte.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/criss.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/fabi.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/sisa.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/flor.jpg" alt="">
+
+              </div>
+            </div>
+            <div class="item">
+              <div class="thumb">
+                <img src="../assets/images/FUNYAJ/tinkuy.jpg" alt="">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br><br>
+  <center><h1>Empoderando Comunidades y Fomentando la Solidaridad</h1></center>
+<br><br>
+  <div class="container-fluid" style="margin-top:-30px;">
+        <div class="row content">
+            <div class="col-md-6 text-section d-flex align-items-center">
+                <div class="p-5">
+                </div>
+                <p>Guangaje, Ecuador, una parroquia en la provincia de Cotopaxi de Ecuador,
+                  en lo alto de la Cordillera de los Andes, es el hogar de aproximadamente
+                   7.000 indígenas quichua de ascendencia inca. Se compone de 34 pequeñas
+                   comunidades ubicadas en altitudes que varían entre 11 y 13,500 pies.
+                  <br><br>
+                  Debido a siglos de racismo y aislamiento, y a su propia ecología altiplánica
+                   (lluvias, frío y viento limitados), esta zona es una de las más pobres del
+                   Ecuador, con casi toda la población viviendo en extrema pobreza.
+                    La esperanza de vida ronda los 50 años, 20 años por debajo del promedio
+                    ecuatoriano.
+                  <br><br>
+                  La principal fuente de ingresos es la agricultura de subsistencia,
+                  labrada a mano, en terrenos muy empinados. Según encuestas gubernamentales,
+                   la desnutrición crónica es endémica en tasas del 70-80% y muchas de las
+                    comunidades carecen de fuentes de agua limpia y confiable. El acceso a
+                     la atención médica y las oportunidades educativas son limitados.
+                    <br><br>
+                    En 2012 se inauguró una escuela secundaria regional, con unos 20
+                     graduados por año. Muchas familias y jóvenes desean avanzar en su
+                     educación y mejorar sus oportunidades en la vida, pero tienen recursos
+                     limitados para hacerlo. Hemos descubierto que la gente es cálida,
+                     trabajadora, dedicada a la familia y con comunidades sólidas y colaborativas.</p>
+                  </div>
+                  <div class="col-md-6 text-section d-flex align-items-center">
+                      <div class="p-5">
+                        <p>"Nuestra misión es apoyar el óptimo desarrollo físico, social, intelectual y espiritual de la juventud de Guangaje"</p>
+                        <br>
+                        <p>Crear un cambio sostenible a través de becas para jóvenes que asisten a universidades o instituciones de educación vocacional, apoyar programas de arte en la comunidad y asociarse con instituciones educativas y sin fines de lucro ecuatorianas y estadounidenses.</p>
+                        <br>
+                        <img src="../assets/images/funyaj1.jpg" alt="" height="325px">
+            </div>
+        </div>
+          </div>
+    </div>
+<br><br>
+    <img src="../assets/images/funyaj.jpg" alt="">
+    <br><br><br>
+
+    <div class="row" >
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-4">
+      <img src="../assets/images/deporte/sello.jpg" alt=""  height="75%">
+        </div>
+        <div class="col-md-6">
+        <center><h1>Acerca de Fundación Yanapak Jumandy</h1></center>
+          <br>
+          <p>Es una organización sin fines de lucro ecuatoriana
+              con sede en Guangaje, dirigida por jóvenes y dirigida
+            por Rodrigo Ilaquiche, nativo de Guangaje y Superintendente
+            del sistema escolar de Guangaje. Su misión es brindar a los
+            jóvenes de Guangaje oportunidades de enriquecimiento en educación,
+            deportes, microindustrias, música y otras actividades para que
+            puedan alcanzar su máximo potencial. Trabajamos con la Fundación
+            Yanapak Jumandy para brindar becas educativas y apoyo a los jóvenes de Guangaje.</p>
+        </div>
+        </div>
+
+  <div class="carousel-container" style="margin-top:-60px;">
+    <h1 class="carousel-title">Universidades que se encuentra nuestros <br> BECARIOS </h1>
+
+        <div class="carousel-logos">
+          <a href="https://www.utc.edu.ec/" target="_blank">
+            <img src="../assets/images/FUNYAJ/logo-U/utc.png" alt="UTC" class="carousel-logo">
+          </a>
+          <a href="https://istvicenteleon.edu.ec/" target="_blank">
+            <img src="../assets/images/FUNYAJ/logo-U/leon.png" alt="ISVL" class="carousel-logo">
+          </a>
+          <a href="https://espe-el.espe.edu.ec/" target="_blank">
+            <img src="../assets/images/FUNYAJ/logo-U/espe.png" alt="ESPE" class="carousel-logo">
+          </a>
+      <a href="https://www.uce.edu.ec/" target="_blank">
+        <img src="../assets/images/FUNYAJ/logo-U/central.png" alt="UCE" class="carousel-logo">
+      </a>
+      <a href="https://www.unach.edu.ec/" target="_blank">
+        <img src="../assets/images/FUNYAJ/logo-U/unach.jpeg" alt="UNACH" class="carousel-logo">
+      </a>
+    </div>
+  </div>
+
+      <marquee class="marquesina" style="margin-top:-250px;"><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b>
+        <b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b>
+        <b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b>
+        <b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b><b>¡Fundación FUNYAJ!</b></marquee>
+<br><br><br><br>
+<div class="row" >
+  <div class="col-2">
+  </div>
+  <div class="col-5">
+    <h1>Ayúdanos a crear un cambio duradero en Guangaje.</h1>
+  </div>
+  <div class="col-3">
+      <h6>Considere hacer una donación hoy.</h6>
+      <div class="main-button">
+        <a href="/donacion/">  <i class="fa-solid fa-hand-holding-dollar"></i>&nbsp;&nbsp; Donación</a>
+
+      </div>
+    </div>
+  </div>
+  <br><br>
+</div>
+
+{% endblock %}
+
+  <footer style="margin-top:0px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="social-icons" wi>
+       <a href="https://www.facebook.com/profile.php?id=100092849835872&mibextid=ZbWKwL" target="_blank">
+           <i class="fab fa-facebook"></i>
+       </a>
+       <a href="https://www.tiktok.com/@fundacion.funyaj?_t=8nFsxnTrDT3&_r=1" target="_blank">
+           <i class="fab fa-tiktok"></i>
+       </a>
+       <a href="https://www.instagram.com/fundacionfunyaj?igsh=cGIyYm85OW1pZzJh" target="_blank">
+           <i class="fab fa-instagram"></i>
+       </a>
+   </div>
+   <hr>
+          <p>Derechos de autor © 2024 Fundación <br> <a href="#">FUNYAJ</a> Todos los derechos reservados.
+
+          Design: <a title="CSS Templates" rel="sponsored" href="https://templatemo.com/page/1" target="_blank">TemplateMo</a> Distribution: <a title="CSS Templatesss" rel="sponsored" href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
+        </div>
+        <br>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <a href="#" class="arrow"><i class="fa-solid fa-arrow-up"></i></a>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="../assets/js/isotope.min.js"></script>
+  <script src="../assets/js/owl-carousel.js"></script>
+
+  <script src="../assets/js/tabs.js"></script>
+  <script src="../assets/js/popup.js"></script>
+  <script src="../assets/js/custom.js"></script>
+  <script src="../assets/js/principal.js"></script>
+
+
+
+  {% if messages %}
+      {% for mensaje in messages %}
+          <script type="text/javascript">
+              {% if 'Error' in mensaje %}
+                  iziToast.error({
+                      title: '¡Error!',
+                      message: '{{ mensaje }}',
+                      position: 'topRight',
+                      timeout: 5000,  // Puedes ajustar el tiempo que durará el mensaje
+                      close: true,  // Habilita el botón para cerrar el mensaje
+                  });
+              {% else %}
+                  iziToast.success({
+                      title: '!Hecho!',
+                      message: '{{ mensaje }}',
+                      position: 'topRight',
+                      timeout: 5000,  // Puedes ajustar el tiempo que durará el mensaje
+                      close: true,  // Habilita el botón para cerrar el mensaje
+                  });
+              {% endif %}
+          </script>
+      {% endfor %}
+  {% endif %}
+
+  </body>
+</html>

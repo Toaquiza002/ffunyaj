@@ -1,0 +1,215 @@
+{% extends "./index.html" %}
+
+{% block contenido %}
+
+    {% load static %}
+
+    <style>
+      .icon-button {
+        padding: 10px 30px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #28a745;
+        color: white;
+        font-size: 18px;
+    </style>
+    <br><br><br><br>
+  <center><h2>Formulario de Registro</h2></center><br><br>
+
+  <form id="registrationForm">
+      <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-3">
+              <label for="first_name">Nombre:</label>
+              <input type="text" id="first_name" name="first_name" required>
+          </div>
+          <div class="col-md-3">
+              <label for="last_name">Apellidos:</label>
+              <input type="text" id="last_name" name="last_name" required>
+          </div>
+      </div>
+      <br><br>
+      <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+              <label for="email">Correo electrónico:</label>
+              <input type="text" id="email" name="email" required><br><br>
+
+              <label for="phone_number">Número de teléfono:</label>
+              <input type="number" id="phone_number" name="phone_number" required><br><br>
+
+              <label for="birth_date">Fecha de nacimiento:</label>
+              <input type="date" id="birth_date" name="birth_date" required><br><br>
+
+              <label for="gender">Género:</label>
+              <select id="gender" name="gender" required>
+                  <option value="" disabled selected>--Selecciona--</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+              </select><br><br>
+              <label for="city">Ciudad de residencia:</label>
+              <input type="text" id="city" name="city" required><br><br>
+
+              <center><button class="icon-button"type="submit"><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;Enviar</button></center>
+          </div>
+      </div>
+      <br>
+  </form>
+
+  <script>
+         document.getElementById('registrationForm').addEventListener('submit', function(event) {
+             event.preventDefault();
+
+             const form = event.target;
+             const formData = new FormData(form);
+             let isValid = true;
+
+             // Validar todos los campos requeridos
+             form.querySelectorAll('input[required]').forEach(input => {
+                 if (!input.value.trim()) {
+                     isValid = false;
+                     input.classList.add('error'); // Opcional: añadir una clase para mostrar visualmente el error
+                 } else {
+                     input.classList.remove('error');
+                 }
+             });
+
+             if (!isValid) {
+                 iziToast.error({
+                     title: 'Error',
+                     message: 'Por favor, completa todos los campos requeridos.',
+                     position: 'topRight',
+                     timeout: 5000,
+                 });
+                 return; // Salir si hay campos faltantes
+             }
+
+             fetch('/enviar-formulario/', {
+                 method: 'POST',
+                 body: formData,
+             })
+             .then(response => response.json())
+             .then(data => {
+                 if (data.status === 'ok') {
+                     iziToast.success({
+                         title: 'Éxito',
+                         message: '¡Formulario enviado con éxito!',
+                         position: 'topRight',
+                         timeout: 3000, // Tiempo para mostrar el mensaje
+                     });
+
+                     // Vaciar los campos del formulario
+                     form.reset();
+
+                     // Redirigir a otra página después de que el mensaje se ha mostrado
+                     setTimeout(() => {
+                         window.location.href = '/separte/'; // Corrige la URL si es necesario
+                     }, 1000); // Tiempo igual al de timeout en iziToast para sincronizar
+                 } else {
+                     iziToast.error({
+                         title: 'Error',
+                         message: 'Hubo un problema al enviar el formulario.',
+                         position: 'topRight',
+                         timeout: 5000,
+                     });
+                 }
+             })
+             .catch(error => {
+                 console.error('Error:', error);
+
+                 iziToast.error({
+                     title: 'Error',
+                     message: 'Hubo un problema al enviar el formulario.',
+                     position: 'topRight',
+                     timeout: 5000,
+                 });
+             });
+         });
+     </script>
+
+  <script type="text/javascript">
+//validacion de campos
+        $.validator.addMethod("lettersOnly", function(value, element) {
+        return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+        }, "Este espacio debe contener solo letras y espacios.");
+//correo
+        $.validator.addMethod("correoValido", function(value, element) {
+            var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+            return this.optional(element) || regex.test(value);
+        }, "Por favor ingrese un correo válido (gmail, yahoo, outlook, hotmail o institucional como .edu.ec, .gob.ec, .org.ec, .com.ec).");
+//mayusvula
+        $(document).ready(function() {
+       $("#city").on("input", function() {
+           var value = $(this).val();
+           $(this).val(value.toUpperCase());  // Convierte el texto en mayúsculas
+       });
+   });
+        $("#registrationForm").validate({
+          rules: {
+              "first_name": {
+                  required: true,
+                  lettersOnly: true
+              },
+              "last_name": {
+                  required: true,
+                  lettersOnly: true
+              },
+              "email": {
+                required: true,
+                email: true,
+                correoValido: true
+              },
+              "phone_number": {
+                  required: true,
+                  digits: true, // Asegura que solo se ingresen dígitos
+                  minlength: 10, // Asegura que tenga al menos 10 dígitos
+                  maxlength: 10  // Asegura que tenga exactamente 10 dígitos
+              },
+              "birth_date": {
+                  required: true
+              },
+              "gender": {
+                  required: true
+              },
+              "city": {
+                  required: true,
+                  lettersOnly: true
+              }
+          },
+          messages: {
+              "first_name": {
+                  required: "Rellene el campo Obligatorio."
+              },
+              "last_name": {
+                  required: "Rellene el campo Obligatorio."
+              },
+              "email": {
+                required: "Debe ingresar un correo electrónico.",
+                email: "Ingrese una dirección de correo electrónico válida.",
+                correoValido: "Por favor ingrese un correo válido "
+              },
+              "phone_number": {
+                  required: "Rellene el campo Obligatorio.",
+                  digits: "Ingrese solo dígitos.",
+                  minlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+                  maxlength: "El número de teléfono debe tener exactamente 10 dígitos."
+              },
+              "birth_date": {
+                  required: "Rellene el campo Obligatorio."
+              },
+              "gender": {
+                  required: "Seleccione el campo Obligatorio."
+              },
+              "city": {
+                  required: "Rellene el campo Obligatorio."
+              }
+          }
+      });
+  </script>
+
+
+
+
+{% endblock %}

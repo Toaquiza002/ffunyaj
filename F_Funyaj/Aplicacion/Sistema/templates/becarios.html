@@ -1,0 +1,209 @@
+{% extends "./index.html" %}
+
+{% block contenido %}
+
+    {% load static %}
+  <br><br><br>
+
+
+        <div class="banner">
+            <div class="banner-text">
+                <h1>Nuestros Becarios</h1>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <a href="#" class="button" onclick="showProfile('UTC')">Universidad Técnica de Cotopaxi</a>
+            <a href="#" class="button" onclick="showProfile('UCE')">Universidad Central del Ecuador</a>
+            <a href="#" class="button" onclick="showProfile('ESPE')">ESPE</a>
+            <a href="#" class="button" onclick="showProfile('UNACH')">Universidad Nacional de Chimborazo</a>
+            <a href="#" class="button" onclick="showProfile('ISTVL')">Instituto Superior Vicente León</a>
+            <a href="#" class="button" onclick="showProfile('Graduados')">Graduados</a>
+        </div>
+        <div id="UTC" class="profile-container">
+          <h1>UTC</h1>
+            <div class="gallery">
+                <div class="profile">
+                    <a href="/perfilToaquiza/">
+                        <img src="../assets/images/perfiles/por1.png" alt="" >
+                        <br><br>
+                        <h4>Toaquiza Ugsha Byron Rodrigo</h4>
+                    </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilTania/">
+                        <img src="../assets/images/perfiles/30.jpg" alt="">
+                        <br><br>
+                        <h4>Toaquiza Pallo Tania Mishel</h4>
+                      </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilMartha/">
+                        <img src="../assets/images/perfiles/001.jpg" alt="">
+                        <br><br>
+                        <h4>Vega Cayo Martha Rebeca</h4>
+                      </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilFranklin/">
+                        <img src="../assets/images/perfiles/27.png" alt="">
+                        <br><br>
+                        <h4>Tigasi Lutuala Franklin Jhon</h4>
+                      </a>
+                </div>
+
+                <div class="profile">
+                    <a href="/perfilFanny/">
+                        <img src="../assets/images/perfiles/katty.jpg" alt="">
+                        <br><br>
+                        <h4>Cuyo Millingalli Fanny Katherine</h4>
+                    </a>
+                </div>
+
+                <div class="profile">
+                    <a href="/perfilSonia/">
+                        <img src="../assets/images/perfiles/sonia.jpg" alt="">
+                        <br><br>
+                        <h4>Ugsha Tipan Sonia Maribel</h4>
+                    </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilJonathan/">
+                        <img src="../assets/images/perfiles/28.png" alt="">
+                        <br><br>
+                        <h4>Toaquiza Tigasi Brayan Jonathan</h4>
+                    </a>
+                </div>
+              </div>
+        </div>
+
+        <div id="UCE" class="profile-container">
+          <h1>U.C.E</h1>
+            <div class="gallery">
+                <div class="profile">
+                    <a href="/perfilLiliana/">
+                        <img src="../assets/images/perfiles/lili.jpg" alt="" >
+                        <br><br>
+                        <h4>Oto Oto Liliana Estefania</h4>
+                    </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilRosa/">
+                        <img src="../assets/images/perfiles/29.jpg" alt="">
+                        <br><br>
+                        <h4>Cuchiparte Ugsha Rosa Erika</h4>
+                    </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilAlexI/">
+                        <img src="../assets/images/perfiles/26.png" alt="">
+                        <br><br>
+                        <h4>Ilaquiache Vega Alex Leonardo</h4>
+                    </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilJhonny/">
+                        <img src="../assets/images/perfiles/jhonny.jpg" alt="">
+                        <br><br>
+                        <h4>Lisintuña Toaquiza Jhony Armando</h4>
+                    </a>
+                </div>
+          </div>
+            </div>
+        <!-- Similar content for other profiles (ESPE, ISVL, UNCHI) -->
+        <div id="ESPE" class="profile-container">
+          <h1>ESPE</h1>
+            <div class="gallery">
+                <div class="profile">
+                    <a href="/perfilKimberly/">
+                        <img src="../assets/images/perfiles/kimberly.jpg" alt="" >
+                        <br><br>
+                        <h4>Toaquiza Pallo Kimberly Estefania</h4>
+                    </a>
+                </div>
+                <div class="profile">
+                    <a href="/perfilWillian">
+                        <img src="../assets/images/perfiles/patricio.jpg" alt="">
+                        <br><br>
+                        <h4>Tigasi Guamangate Willian Patricio</h4>
+                    </a>
+                </div>
+              </div>
+            </div>
+
+            <div id="UNACH" class="profile-container">
+              <h1>UNACH</h1>
+                <div class="gallery">
+                    <div class="profile">
+                        <a href="/perfilOscar/">
+                            <img src="../assets/images/perfiles/oscar.png" alt="" >
+                            <br><br>
+                            <h4>Tigasi Tipan Oscar Stalyn</h4>
+                        </a>
+                    </div>
+                    <div class="profile">
+                        <a href="/perfilIsmael/">
+                            <img src="../assets/images/perfiles/ismail.jpg" alt="">
+                            <br><br>
+                            <h4>Toaquiza Toaquiza Alex Ismael</h4>
+                        </a>
+                    </div>
+                  </div>
+                </div>
+                <div id="Graduados" class="profile-container">
+                  <h1>Perfiles Profesionales</h1>
+                    <div class="gallery">
+                      <div class="profile">
+                          <a href="/perfilAna/">
+                              <img src="../assets/images/perfiles/ana.jpeg" alt="">
+                              <br><br>
+                              <h4>Lutuala Lutuala Ana Maria</h4>
+                          </a>
+                      </div>
+
+                      <div class="profile">
+                          <a href="/perfilJenny/">
+                              <img src="../assets/images/perfiles/31.jpg" alt="">
+                              <br><br>
+                              <h4>Toaquiza Vega Jenny Maritza</h4>
+                            </a>
+                      </div>
+
+                      <div class="profile">
+                          <a href="/perfilWilmer/">
+                              <img src="../assets/images/perfiles/wilmerl.jpg" alt="">
+                              <br><br>
+                              <h4>Lutuala Tigasi Wilmer Efrain</h4>
+                          </a>
+                      </div>
+
+                      </div>
+                    </div>
+
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+          showProfile('UTC');
+          });
+            function showProfile(profileId) {
+                var profiles = document.querySelectorAll('.profile-container');
+                profiles.forEach(function(profile) {
+                    profile.style.display = 'none';
+                });
+
+                var activeProfile = document.getElementById(profileId);
+                if (activeProfile) {
+                    activeProfile.style.display = 'block';
+                }
+
+                var buttons = document.querySelectorAll('.button');
+                buttons.forEach(function(button) {
+                    button.classList.remove('active');
+                });
+
+                event.target.classList.add('active');
+            }
+        </script>
+<br>
+
+{% endblock %}

@@ -1,0 +1,558 @@
+{% extends "./administrador.html" %}
+{% block contenido %}
+{% load static %}
+<body>
+    <br><br><br><br>
+    <center><h1 style="font-family: 'Times New Roman', serif;">Registros de Estudiantes Becarios</h1></center>
+    <div class="row">
+        <div class="col-md-11 text-end">
+            <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addEstudianteModal">
+                <i class="fa fa-plus-circle fa-1x"></i> Agregar Estudiante
+            </a>
+        </div>
+    </div><br>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            {% if estudiantes %}
+                <table class="table custom-table" id="miTabla">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Cédula</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Universidad</th>
+                            <th>Carrera</th>
+                            <th>Fecha Ingreso</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for estudiante in estudiantes %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ estudiante.nombres }}</td>
+                                <td>{{ estudiante.apellidos }}</td>
+                                <td>{{ estudiante.cedula }}</td>
+                                <td>{{ estudiante.direccion }}</td>
+                                <td>{{ estudiante.telefono }}</td>
+                                <td>{{ estudiante.email }}</td>
+                                <td>{{ estudiante.universidad.nombre }}</td>
+                                <td>{{ estudiante.carrera }}</td>
+                                <td>{{ estudiante.estado }}</td>
+                                <td>
+                                    <a href="javascript:void(0)" onclick="eliminarEstudiante('/eliminarEstudiante/{{ estudiante.id }}');" class="btn btn-danger"><i class="fa-solid fa-trash"></i> </a>
+                                    <a href="javascript:void(0);" onclick="mostrarModalEditar({{ estudiante.id }}, '{{ estudiante.nombres }}', '{{ estudiante.apellidos }}', '{{ estudiante.cedula }}', '{{ estudiante.direccion }}', '{{ estudiante.telefono }}','{{ estudiante.email }}', {{ estudiante.universidad.id }}, '{{ estudiante.carrera }}', '{{ estudiante.año_de_ingreso }}', '{{ estudiante.estado }}')" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <br><br><br><br><p class="text-center">Esta sección no contiene datos</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Modal para agregar estudiante -->
+    <div class="modal fade" id="addEstudianteModal" tabindex="-1" aria-labelledby="addEstudianteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEstudianteModalLabel">Agregar Estudiante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/agregarestudiante/" method="post" enctype="multipart/form-data" id="miFormulario">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombres:</label>
+                            <input type="text" class="form-control" id="nombres" name="nombres" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label">Apellidos:</label>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cedula" class="form-label">Cédula:</label>
+                            <input type="number" class="form-control" id="cedula" name="cedula" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono:</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <br>
+                        <label for="actividad" class="form-label">Seleccione una universidad:</label>
+                        <select class="form-control" name="id_universidad" id="id_universidad" required>
+                            <option value="">--Universidad--</option>
+                            {% for listuniversidad in universidad %}
+                                <option value="{{ listuniversidad.id }}">{{ listuniversidad.nombre }} </option>
+                            {% endfor %}
+                        </select>
+                        <div class="mb-3">
+                            <label for="carrera" class="form-label">Carrera:</label>
+                            <input type="text" class="form-control" id="carrera" name="carrera" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="año_de_ingreso" class="form-label">Año de ingreso:</label>
+                            <input type="number" class="form-control" id="año_de_ingreso" name="año_de_ingreso" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Seleccione el Estado:</label>
+                            <select class="form-control" id="estado" name="estado" required>
+                                <option value="Estudiante Activo" selected>Estudiante Activo</option>
+                            </select>
+                        </div>
+
+                        <center><button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> &nbsp;&nbsp;Guardar Datos</button></center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar estudiante -->
+    <div class="modal fade" id="editEstudianteModal" tabindex="-1" aria-labelledby="editEstudianteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEstudianteModalLabel">Editar Estudiante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/editar_estudiante/{{ estudiante.id }}/" method="post" enctype="multipart/form-data" id="editFormulario">
+                        {% csrf_token %}
+                        <input type="hidden" id="estudiante_id" name="id" value="">
+
+                        <div class="mb-3">
+                            <label for="edit_nombres" class="form-label">Nombres:</label>
+                            <input type="text" class="form-control" id="edit_nombres" name="nombres" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_apellidos" class="form-label">Apellidos:</label>
+                            <input type="text" class="form-control" id="edit_apellidos" name="apellidos" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_cedula" class="form-label">Cédula:</label>
+                            <input type="number" class="form-control" id="edit_cedula" name="cedula" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_direccion" class="form-label">Dirección:</label>
+                            <input type="text" class="form-control" id="edit_direccion" name="direccion" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_telefono" class="form-label">Teléfono:</label>
+                            <input type="number" class="form-control" id="edit_telefono" name="telefono" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_email" class="form-label">Correo:</label>
+                            <input type="email" class="form-control" id="edit_email" name="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_id_universidad" class="form-label">Universidad:</label>
+                            <select class="form-control" name="id_universidad" id="edit_id_universidad" required>
+                                <option value="">--Seleccionar Universidad--</option>
+                                {% for listuniversidad in universidad %}
+                                    <option value="{{ listuniversidad.id }}" {% if estudiante.universidad.id == listuniversidad.id %} selected {% endif %}>
+                                        {{ listuniversidad.nombre }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_carrera" class="form-label">Carrera:</label>
+                            <input type="text" class="form-control" id="edit_carrera" name="carrera" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_año_de_ingreso" class="form-label">Año de ingreso:</label>
+                            <input type="number" class="form-control" id="edit_año_de_ingreso" name="año_de_ingreso" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_estado" class="form-label">Estado:</label>
+                            <select class="form-control" id="edit_estado" name="estado" required>
+                                <option value="Estudiante Activo" {% if estudiante.estado == 'Estudiante Activo' %} selected {% endif %}>Estudiante Activo</option>
+                                <option value="Desertor" {% if estudiante.estado == 'Desertor' %} selected {% endif %}>Desertor</option>
+                                <option value="Graduado" {% if estudiante.estado == 'Graduado' %} selected {% endif %}>Graduado</option>
+                            </select>
+                        </div>
+
+                        <center><button type="submit" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i>&nbsp;&nbsp;Actualizar Datos</button></center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function mostrarModalEditar(id, nombres, apellidos, cedula, direccion, telefono, email, universidad_id, carrera, año_de_ingreso, estado) {
+        document.getElementById('estudiante_id').value = id;
+        document.getElementById('edit_nombres').value = nombres;
+        document.getElementById('edit_apellidos').value = apellidos;
+        document.getElementById('edit_cedula').value = cedula;
+        document.getElementById('edit_direccion').value = direccion;
+        document.getElementById('edit_telefono').value = telefono;
+        document.getElementById('edit_email').value = email;
+        document.getElementById('edit_id_universidad').value = universidad_id;
+        document.getElementById('edit_carrera').value = carrera;
+        document.getElementById('edit_año_de_ingreso').value = año_de_ingreso;
+        document.getElementById('edit_estado').value = estado;
+
+        const form = document.getElementById('editFormulario');
+        form.action = '/editar_estudiante/' + id + '/';
+
+        var myModal = new bootstrap.Modal(document.getElementById('editEstudianteModal'));
+        myModal.show();
+    }
+</script>
+
+    <script type="text/javascript">
+        function eliminarEstudiante(url) {
+            iziToast.question({
+                timeout: 15000,
+                close: true,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'CONFIRMACIÓN',
+                message: '¿Está seguro de <br> eliminar el dato <br> seleccionado?',
+                position: 'center',
+                buttons: [
+                    ['<button><b>SI</b></button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        window.location.href = url;
+                    }, true],
+                    ['<button>NO</button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }]
+                ]
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#miTabla').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                        customize: function(doc) {
+                            doc.content[1].margin = [20, 20, 20, 20];
+                            doc.styles.tableHeader.fontSize = 10;
+                            doc.styles.tableBodyOdd.fontSize = 8;
+                            doc.styles.tableBodyEven.fontSize = 8;
+                        }
+                    },
+                    'print',
+                    'csv'
+                ],
+                scrollX: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+    // Solo letras
+    $.validator.addMethod("lettersOnly", function(value, element) {
+        return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+    }, "Este espacio debe contener solo letras y espacios.");
+
+    // Validar la cédula ecuatoriana
+    $.validator.addMethod("cedulaEcuador", function(value, element) {
+        var cedula = value.trim();
+        if (cedula.length !== 10) return false;
+        var cedulaArray = cedula.split('').map(Number);
+        var provincia = cedulaArray[0] * 10 + cedulaArray[1];
+        if (provincia < 1 || provincia > 24) return false;
+        var suma = 0;
+        for (var i = 0; i < 9; i++) {
+            var digito = cedulaArray[i];
+            if (i % 2 === 0) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+            }
+            suma += digito;
+        }
+        var digitoVerificador = cedulaArray[9];
+        var verificadorCalculado = 10 - (suma % 10);
+        if (verificadorCalculado === 10) verificadorCalculado = 0;
+        return digitoVerificador === verificadorCalculado;
+    }, "La cédula ingresada es inválida.");
+
+    // Validar correo electrónico
+    $.validator.addMethod("correoValido", function(value, element) {
+        var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+        return this.optional(element) || regex.test(value);
+    }, "Por favor ingrese un correo válido");
+
+    // Validación para el año de ingreso
+    $.validator.addMethod("añoValido", function(value, element) {
+        var currentYear = new Date().getFullYear();
+        return this.optional(element) || (value >= 2019 && value <= currentYear);
+    }, "El año de ingreso debe ser desde 2019 hasta el año actual.");
+    // Validar teléfono de Ecuador (debe empezar con 09 y tener 10 dígitos)
+    $.validator.addMethod("telefonoEcuador", function(value, element) {
+        var regex = /^09\d{8}$/; // Inicia con 09 y tiene 8 dígitos más
+        return this.optional(element) || regex.test(value);
+    }, "Por favor ingrese un número de teléfono válido de Ecuador que comience con 09.");
+    // Aplicar la validación
+    $("#miFormulario").validate({
+        rules: {
+            "nombres": {
+                required: true,
+                lettersOnly: true
+            },
+            "apellidos": {
+                required: true,
+                lettersOnly: true
+            },
+            "cedula": {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10,
+                cedulaEcuador: true
+            },
+            "direccion": {
+                required: true,
+            },
+            "telefono": {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10,
+                telefonoEcuador: true
+            },
+            "email": {
+                required: true,
+                email: true,
+                correoValido: true
+            },
+            "id_universidad": {
+                required: true,
+            },
+            "carrera": {
+                required: true,
+                lettersOnly: true
+            },
+            "año_de_ingreso": {
+                required: true,
+                añoValido: true
+            },
+            "estado": {
+                required: true,
+
+            }
+        },
+        messages: {
+            "nombres": {
+                required: "Campo Obligatorio*"
+            },
+            "apellidos": {
+                required: "Campo Obligatorio*"
+            },
+            "cedula": {
+                required: "Campo Obligatorio*",
+                digits: "Ingrese solo dígitos.",
+                minlength: "El número de cédula debe tener exactamente 10 dígitos.",
+                maxlength: "El número de cédula debe tener exactamente 10 dígitos.",
+                cedulaEcuador: "La cédula ingresada es inválida."
+            },
+            "direccion": {
+                required: "Campo Obligatorio*"
+            },
+            "telefono": {
+                required: "Campo Obligatorio*",
+                digits: "Ingrese solo dígitos.",
+                minlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+                maxlength: "El número de teléfono debe tener exactamente 10 dígitos."
+            },
+            "email": {
+                required: "Campo Obligatorio*",
+                email: "Ingrese una dirección de correo electrónico válida.",
+                correoValido: "Por favor ingrese un correo válido"
+            },
+            "id_universidad": {
+                required: "Campo Obligatorio*"
+            },
+            "carrera": {
+                required: "Campo Obligatorio*"
+            },
+            "año_de_ingreso": {
+                required: "Campo Obligatorio*",
+                añoValido: "El año de ingreso debe ser desde 2019 hasta el año actual."
+            },
+            "estado": {
+                required: "Campo Obligatorio*"
+            }
+        }
+    });
+</script>
+
+    <  <script type="text/javascript">
+      // Solo letras
+      $.validator.addMethod("lettersOnly", function(value, element) {
+          return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+      }, "Este espacio debe contener solo letras y espacios.");
+
+      // Validar la cédula ecuatoriana
+      $.validator.addMethod("cedulaEcuador", function(value, element) {
+          var cedula = value.trim();
+          if (cedula.length !== 10) return false;
+          var cedulaArray = cedula.split('').map(Number);
+          var provincia = cedulaArray[0] * 10 + cedulaArray[1];
+          if (provincia < 1 || provincia > 24) return false;
+          var suma = 0;
+          for (var i = 0; i < 9; i++) {
+              var digito = cedulaArray[i];
+              if (i % 2 === 0) {
+                  digito *= 2;
+                  if (digito > 9) digito -= 9;
+              }
+              suma += digito;
+          }
+          var digitoVerificador = cedulaArray[9];
+          var verificadorCalculado = 10 - (suma % 10);
+          if (verificadorCalculado === 10) verificadorCalculado = 0;
+          return digitoVerificador === verificadorCalculado;
+      }, "La cédula ingresada es inválida.");
+
+      // Validar correo electrónico
+      $.validator.addMethod("correoValido", function(value, element) {
+          var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+          return this.optional(element) || regex.test(value);
+      }, "Por favor ingrese un correo válido");
+
+      // Validación para el año de ingreso
+      $.validator.addMethod("añoValido", function(value, element) {
+          var currentYear = new Date().getFullYear();
+          return this.optional(element) || (value >= 2019 && value <= currentYear);
+      }, "El año de ingreso debe ser desde 2019 hasta el año actual.");
+      // Validar teléfono de Ecuador (debe empezar con 09 y tener 10 dígitos)
+      $.validator.addMethod("telefonoEcuador", function(value, element) {
+          var regex = /^09\d{8}$/; // Inicia con 09 y tiene 8 dígitos más
+          return this.optional(element) || regex.test(value);
+      }, "Por favor ingrese un número de teléfono válido de Ecuador que comience con 09.");
+      // Aplicar la validación
+      $("#editFormulario").validate({
+          rules: {
+              "nombres": {
+                  required: true,
+                  lettersOnly: true
+              },
+              "apellidos": {
+                  required: true,
+                  lettersOnly: true
+              },
+              "cedula": {
+                  required: true,
+                  digits: true,
+                  minlength: 10,
+                  maxlength: 10,
+                  cedulaEcuador: true
+              },
+              "direccion": {
+                  required: true,
+              },
+              "telefono": {
+                  required: true,
+                  digits: true,
+                  minlength: 10,
+                  maxlength: 10,
+                  telefonoEcuador: true
+              },
+              "email": {
+                  required: true,
+                  email: true,
+                  correoValido: true
+              },
+              "id_universidad": {
+                  required: true,
+              },
+              "carrera": {
+                  required: true,
+                  lettersOnly: true
+              },
+              "año_de_ingreso": {
+                  required: true,
+                  añoValido: true
+              },
+              "estado": {
+                  required: true,
+
+              }
+          },
+          messages: {
+              "nombres": {
+                  required: "Campo Obligatorio*"
+              },
+              "apellidos": {
+                  required: "Campo Obligatorio*"
+              },
+              "cedula": {
+                  required: "Campo Obligatorio*",
+                  digits: "Ingrese solo dígitos.",
+                  minlength: "El número de cédula debe tener exactamente 10 dígitos.",
+                  maxlength: "El número de cédula debe tener exactamente 10 dígitos.",
+                  cedulaEcuador: "La cédula ingresada es inválida."
+              },
+              "direccion": {
+                  required: "Campo Obligatorio*"
+              },
+              "telefono": {
+                  required: "Campo Obligatorio*",
+                  digits: "Ingrese solo dígitos.",
+                  minlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+                  maxlength: "El número de teléfono debe tener exactamente 10 dígitos."
+              },
+              "email": {
+                  required: "Campo Obligatorio*",
+                  email: "Ingrese una dirección de correo electrónico válida.",
+                  correoValido: "Por favor ingrese un correo válido"
+              },
+              "id_universidad": {
+                  required: "Campo Obligatorio*"
+              },
+              "carrera": {
+                  required: "Campo Obligatorio*"
+              },
+              "año_de_ingreso": {
+                  required: "Campo Obligatorio*",
+                  añoValido: "El año de ingreso debe ser desde 2019 hasta el año actual."
+              },
+              "estado": {
+                  required: "Campo Obligatorio*"
+              }
+          }
+      });
+  </script>
+    <br><br><br>
+{% endblock %}

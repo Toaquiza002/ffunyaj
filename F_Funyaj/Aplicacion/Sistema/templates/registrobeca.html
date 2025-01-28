@@ -1,0 +1,211 @@
+{% extends "./index.html" %}
+{% block contenido %}
+{% load static %}
+<style >
+
+  .col-md-4 {
+     font-family: "Times New Roman", Times, serif;
+      background-color: blue;
+      radius: 15px;
+      color: white;
+    }
+    .col-md-7{
+       font-family: "Times New Roman", Times, serif;
+    }
+</style>
+
+<br><br><br><br>
+<div class="regisbeca">
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-4"><br>
+        <form action="/guardarpostulacion/" method="post" enctype="multipart/form-data" id="registrobeca">
+        {% csrf_token %}
+        <center><h1 style="color: white;">¡Únete a nuestra fundación y postúlate ahora para obtener una beca para estudios de tercer nivel!</h1></center>
+        <br>
+        <b>Nombres:</b>
+          <input type="text" name="nombres" id="nombres" value="" placeholder="Ingrese sus nombres" class="form-control" required>
+          <b>Apellidos:</b>
+          <input type="text" name="apellidos" id="apellidos" value="" placeholder="Ingrese sus apellidos" class="form-control" required>
+          <b>Província:</b>
+          <input type="text" name="provincia" id="provincia" value="" placeholder="Ingrese la provincia" class="form-control" required>
+          <b>Cantón:</b>
+          <input type="text" name="canton" id="canton" value="" placeholder="Ingrese el cantón" class="form-control" required>
+          <b>Parroquia:</b>
+          <input type="text" name="parroquia" id="parroquia" value="" placeholder="Ingrese la parroquia" class="form-control" required>
+          <b>Comunidad:</b>
+          <input type="text" name="comunidad" id="comunidad" value="" placeholder="Ingrese la comunidad" class="form-control" required>
+          <b>Cédula:</b>
+          <input type="number" name="cedula" id="cedula" value="" placeholder="Ingrese su numero de cédula" class="form-control" required>
+          <b>Teléfono:</b>
+          <input type="number" name="telefono" id="telefono" value="" placeholder="Ingrese su numero de telefono" class="form-control" required>
+          <b>Correo electrónico:</b>
+          <input type="email" name="email" id="email" value="" placeholder="Ingrese su correo electronico" class="form-control" required>
+          <b>Carrera:</b>
+          <input type="text" name="carrera" id="carrera" value="" placeholder="Ingrese la carrera" class="form-control" required>
+          <b>Aceptación de cupo:</b>
+          <input type="file" name="aceptacion_de_cupo"  id="aceptacion_de_cupo" value="" class="form-control" accept=".pdf"> <br> <br>
+            <center>
+            <button type="submit" name="button" class="btn btn-primary">Enviar</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+            <button type="reset" name="button" class="btn btn-danger">Cancelar</button>
+            </center>
+            <br>
+          </form>
+      </div>
+      <div class="col-lg-7"><br><br><br><br><br><br><br>
+          <img src="../assets/images/regisbeca.png" alt="" width="100%">
+      </div>
+  </div>
+</div>
+<br><br><br>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <h1>¡Aplica Ahora y Transforma Tu Futuro con una Beca de Funyaj!</h1><br>
+    <p>¡No pierdas la oportunidad de avanzar en tu educación superior!
+       Únete a la Fundación Funyaj y postúlate hoy para obtener una beca que te
+        ayudará a alcanzar tus metas académicas. Estamos comprometidos con el apoyo a
+        estudiantes talentosos y motivados como tú, brindándote la oportunidad de desarrollar
+        todo tu potencial. Aplica ahora y da el primer paso hacia un futuro brillante con la
+        ayuda de nuestra fundación. ¡Tu camino hacia el éxito comienza aquí!</p>
+  </div>
+  <div class="col-md-1">
+
+  </div>
+  <div class="col-md-3">
+    <img src="../assets/images/grado.png" alt="">
+
+  </div>
+</div>
+<br><br>
+<script type="text/javascript">
+    $.validator.addMethod("lettersOnly", function(value, element) {
+        return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+    }, "Este espacio debe contener solo letras y espacios.");
+    // Método personalizado para validar la cédula ecuatoriana
+    $.validator.addMethod("cedulaEcuador", function(value, element) {
+        var cedula = value.trim();
+        if (cedula.length !== 10) return false;
+        var cedulaArray = cedula.split('').map(Number);
+        var provincia = cedulaArray[0] * 10 + cedulaArray[1];
+        if (provincia < 1 || provincia > 24) return false;
+        var suma = 0;
+        for (var i = 0; i < 9; i++) {
+            var digito = cedulaArray[i];
+            if (i % 2 === 0) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+            }
+            suma += digito;
+        }
+        var digitoVerificador = cedulaArray[9];
+        var verificadorCalculado = 10 - (suma % 10);
+        if (verificadorCalculado === 10) verificadorCalculado = 0;
+        return digitoVerificador === verificadorCalculado;
+    }, "La cédula ingresada es inválida.");
+    $.validator.addMethod("correoValido", function(value, element) {
+        var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+        return this.optional(element) || regex.test(value);
+    }, "Por favor ingrese un correo válido");
+    $("#registrobeca").validate({
+        rules: {
+            "nombres": {
+                required: true,
+                lettersOnly: true
+            },
+            "apellidos": {
+                required: true,
+                lettersOnly: true
+            },
+            "provincia": {
+                required: true,
+                lettersOnly: true
+            },
+            "canton": {
+                required: true,
+                lettersOnly: true
+            },
+            "parroquia": {
+                required: true,
+                lettersOnly: true
+            },
+            "comunidad": {
+                required: true,
+                lettersOnly: true
+            },
+            "cedula": {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10,
+                cedulaEcuador: true
+            },
+            "telefono": {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            "email": {
+                required: true,
+                email: true,
+                correoValido: true
+            },
+            "carrera": {
+                required: true,
+                lettersOnly: true
+            },
+            "aceptacion_de_cupo": {
+                required: true
+            }
+        },
+        messages: {
+            "nombres": {
+                required: "Por favor, ingrese el nombre."
+            },
+            "apellidos": {
+                required: "Por favor, ingrese el apellido."
+            },
+            "provincia": {
+                required: "Debe ingresar la provincia."
+            },
+            "canton": {
+                required: "Debe ingresar el cantón."
+            },
+            "parroquia": {
+                required: "Debe ingresar la parroquia."
+            },
+            "comunidad": {
+                required: "Debe ingresar la comunidad."
+            },
+            "cedula": {
+                required: "Debe ingresar la cédula.",
+                digits: "Ingrese solo dígitos.",
+                minlength: "El número de cédula debe tener exactamente 10 dígitos.",
+                maxlength: "El número de cédula debe tener exactamente 10 dígitos.",
+                cedulaEcuador: "La cédula ingresada es inválida."
+            },
+            "telefono": {
+                required: "Debe ingresar el teléfono.",
+                digits: "Ingrese solo dígitos.",
+                minlength: "El número de teléfono debe tener exactamente 10 dígitos.",
+                maxlength: "El número de teléfono debe tener exactamente 10 dígitos."
+            },
+            "email": {
+                required: "Debe ingresar un correo electrónico.",
+                email: "Ingrese una dirección de correo electrónico válida.",
+                correoValido: "Por favor ingrese un correo válido"
+            },
+            "carrera": {
+                required: "Debe ingresar la carrera."
+            },
+            "aceptacion_de_cupo": {
+                required: "Debe adjuntar el documento de aceptación de cupo."
+            }
+        }
+    });
+</script>
+
+
+{% endblock %}

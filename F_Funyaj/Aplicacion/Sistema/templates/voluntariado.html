@@ -1,0 +1,315 @@
+{% extends "./administrador.html" %}
+{% block contenido %}
+{% load static %}
+<body>
+   <br><br>
+   <center><h1 style="font-family: 'Times New Roman', serif;">Registro de Actividades de Voluntariado</h1></center>
+   <div class="row">
+       <div class="col-md-11 text-end">
+           <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addVoluntariadoModal">
+               <i class="fa fa-plus-circle fa-1x"></i> Agregar Estudiente
+           </a>
+       </div>
+   </div><br>
+
+   <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-10">
+           {% if voluntario %}
+               <table class="table custom-table" id="miTabla">
+                   <thead class="table-dark">
+                     <tr>
+                           <th>N°.</th>
+                           <th>Voluntariado</th>
+                           <th>Actividad</th>
+                           <th>Fecha</th>
+                           <th>Acciones</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for voluntariado in voluntario %}
+                           <tr>
+                               <td>{{ forloop.counter }}</td>
+                               <td>{{ voluntariado.estudiante }}</td>
+                               <td>{{ voluntariado.actividad }}</td>
+                               <td>{{ voluntariado.fecha|date:'d-m-Y' }}</td>
+                               <td>
+                                   <a href="javascript:void(0)" onclick="eliminarVoluntario('/eliminarVoluntario/{{ voluntariado.id }}');" class="btn btn-danger"><i class="fa-solid fa-trash"></i> </a>&nbsp;&nbsp
+                                   <a href="javascript:void(0)" onclick="mostrarModalEditarVoluntariado('{{ voluntariado.id }}', '{{ voluntariado.estudiante.id }}', '{{ voluntariado.actividad }}', '{{ voluntariado.fecha|date:'Y-m-d' }}', '{{ voluntariado.horas }}');" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> </a>
+                               </td>
+                           </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           {% else %}
+               <br><br><br><br><p class="text-center display-7">No se ha registrado ningún dato <i class="fa-solid fa-circle-xmark"></i></p>
+           {% endif %}
+       </div>
+   </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="addVoluntariadoModal" tabindex="-1" aria-labelledby="addVoluntariadoModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="addVoluntariadoModalLabel">Agregar Actividad Voluntariado</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="/agregarvoluntariado/" method="post" enctype="multipart/form-data" id="miFormulario">
+                     {% csrf_token %}
+                     <select class="form-control" name="id_estudiante" id="id_estudiante" required>
+                         <option value="">--Seleccione un estudiante--</option>
+                         {% for estudiante in estudiantes %}
+                             <option value="{{ estudiante.id }}">{{ estudiante.nombres }} {{ estudiante.apellidos }}</option>
+                         {% endfor %}
+                     </select>
+                     <br>
+                     <div class="mb-3">
+                         <label for="actividad" class="form-label">Actividad voluntariado:</label>
+                         <textarea type="text" class="form-control" id="actividad" name="actividad" required></textarea>
+                     </div>
+                     <div class="mb-3">
+                         <label for="fecha" class="form-label">Fecha de la actividad:</label>
+                         <input type="date" class="form-control" id="fecha" name="fecha" required>
+                     </div>
+                     <div class="mb-3">
+                         <label for="horas" class="form-label">Horas de actividad:</label>
+                         <input type="text" class="form-control" id="horas" name="horas"  required>
+                     </div>
+
+                       <center><button type="submit" class="btn btn-success"> <i class="fa-solid fa-floppy-disk"></i> &nbsp;&nbsp Guardar Datos</button></center>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- Modal para editar voluntariado -->
+   <div class="modal fade" id="editVoluntariadoModal" tabindex="-1" aria-labelledby="editVoluntariadoModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="editVoluntariadoModalLabel">Editar Actividad Voluntariado</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="/editar_voluntariado/{{ voluntariado.id }}/" method="post" enctype="multipart/form-data" id="editVoluntariadoForm">
+                       {% csrf_token %}
+                       <input type="hidden" id="voluntariado_id" name="id" value="">
+
+                       <div class="mb-3">
+                           <label for="editar_voluntariado" class="form-label">Estudiante:</label>
+                           <select class="form-control" name="id_estudiante" id="edit_estudiante" required>
+                               {% for estudiante in estudiantes %}
+                                   <option value="{{ estudiante.id }}" {% if voluntariado.estudiante.id == estudiante.id %} selected {% endif %}>
+                                       {{ estudiante.nombres }} {{ estudiante.apellidos }}
+                                   </option>
+                               {% endfor %}
+                           </select>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_actividad" class="form-label">Actividad Voluntariado:</label>
+                           <textarea class="form-control" id="edit_actividad" name="actividad" required></textarea>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_fecha" class="form-label">Fecha de la actividad:</label>
+                           <input type="date" class="form-control" id="edit_fecha" name="fecha" required>
+                       </div>
+
+                       <div class="mb-3">
+                           <label for="edit_horas" class="form-label">Horas de actividad:</label>
+                           <input type="text" class="form-control" id="edit_horas" name="horas" required>
+                       </div>
+
+                       <center><button type="submit" class="btn btn-info"> <i class="fa-solid fa-arrows-rotate"></i> &nbsp;&nbsp Actualizar Datos</button></center>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <script>
+       function mostrarModalEditarVoluntariado(id, estudiante_id, actividad, fecha, horas) {
+           document.getElementById('voluntariado_id').value = id;
+           document.getElementById('edit_estudiante').value = estudiante_id;
+           document.getElementById('edit_actividad').value = actividad;
+           document.getElementById('edit_fecha').value = fecha;
+           document.getElementById('edit_horas').value = horas;
+
+           const form = document.getElementById('editVoluntariadoForm');
+           form.action = '/editar_voluntariado/' + id + '/';
+
+           var myModal = new bootstrap.Modal(document.getElementById('editVoluntariadoModal'));
+           myModal.show();
+       }
+   </script>
+
+<script type="text/javascript">
+    function eliminarVoluntario(url){
+      iziToast.question({
+          timeout: 15000,
+          close: true,
+          overlay: true,
+          displayMode: 'once',
+          id: 'question',
+          zindex: 999,
+          title: 'CONFIRMACIÓN',
+          message: '¿Está seguro de <br> eliminar el dato <br> seleccionado?',
+          position: 'center',
+          buttons: [
+              ['<button><b>SI</b></button>', function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                  window.location.href=url;
+              }, true],
+              ['<button>NO</button>', function (instance, toast) {
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              }],
+          ]
+      });
+    }
+</script>
+
+<script type="text/javascript">
+   $('#miTabla').DataTable( {
+      dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'pdfHtml5',
+              messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+          },
+          'print',
+          'csv'
+      ],
+      language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'}
+    });
+</script>
+
+
+<script type="text/javascript">
+  // Validar correo electrónico
+  $.validator.addMethod("correoValido", function(value, element) {
+      var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un correo válido");
+
+  // Solo letras
+  $.validator.addMethod("lettersOnly", function(value, element) {
+      return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+  }, "Este espacio debe contener solo letras y espacios.");
+
+  // Validar teléfono de Ecuador (debe empezar con 09 y tener 10 dígitos)
+  $.validator.addMethod("telefonoEcuador", function(value, element) {
+      var regex = /^09\d{8}$/; // Inicia con 09 y tiene 8 dígitos más
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un número de teléfono válido de Ecuador que comience con 09.");
+
+  $("#miFormulario").validate({
+    rules: {
+        "id_estudiante": {
+            required: true
+        },
+        "actividad": {
+            required: true,
+            lettersOnly: true
+        },
+        "fecha": {
+            required: true
+        },
+        "horas": {
+            required: true
+        },
+        "email": {
+            required: true,
+            email: true,
+            correoValido: true
+        }
+    },
+    messages: {
+      "id_estudiante": {
+          required: "Campo Obligatorio*"
+      },
+      "actividad": {
+          required: "Campo Obligatorio*"
+      },
+      "fecha": {
+          required: "Campo Obligatorio*"
+      },
+      "horas": {
+          required: "Campo Obligatorio*"
+      },
+      "email": {
+        required: "Campo Obligatorio*",
+        email: "Ingrese una dirección de correo electrónico válida.",
+        correoValido: "Por favor ingrese un correo válido"
+      }
+    }
+  });
+</script>
+
+
+<script type="text/javascript">
+  // Validar correo electrónico
+  $.validator.addMethod("correoValido", function(value, element) {
+      var regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|[a-zA-Z0-9.-]+\.(edu\.ec|gob\.ec|org\.ec|net\.ec|com\.ec))$/;
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un correo válido");
+
+  // Solo letras
+  $.validator.addMethod("lettersOnly", function(value, element) {
+      return this.optional(element) || /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+  }, "Este espacio debe contener solo letras y espacios.");
+
+  // Validar teléfono de Ecuador (debe empezar con 09 y tener 10 dígitos)
+  $.validator.addMethod("telefonoEcuador", function(value, element) {
+      var regex = /^09\d{8}$/; // Inicia con 09 y tiene 8 dígitos más
+      return this.optional(element) || regex.test(value);
+  }, "Por favor ingrese un número de teléfono válido de Ecuador que comience con 09.");
+
+  $("#editVoluntariadoForm").validate({
+    rules: {
+        "id_estudiante": {
+            required: true
+        },
+        "actividad": {
+            required: true,
+            lettersOnly: true
+        },
+        "fecha": {
+            required: true
+        },
+        "horas": {
+            required: true
+        },
+        "email": {
+            required: true,
+            email: true,
+            correoValido: true
+        }
+    },
+    messages: {
+      "id_estudiante": {
+          required: "Campo Obligatorio*"
+      },
+      "actividad": {
+          required: "Campo Obligatorio*"
+      },
+      "fecha": {
+          required: "Campo Obligatorio*"
+      },
+      "horas": {
+          required: "Campo Obligatorio*"
+      },
+      "email": {
+        required: "Campo Obligatorio*",
+        email: "Ingrese una dirección de correo electrónico válida.",
+        correoValido: "Por favor ingrese un correo válido"
+      }
+    }
+  });
+</script>
+<br><br><br><br>
+
+{% endblock %}

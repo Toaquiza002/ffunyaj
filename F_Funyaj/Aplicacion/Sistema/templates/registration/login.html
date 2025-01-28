@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Overpass', sans-serif;
+            font-size: 100%;
+            color: #1b262c;
+            margin: 0;
+            background-color: #5f6769;
+        }
+
+        /* Contenedor principal */
+        #contenedor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background-image: url(../../assets/images/FUNYAJ/image.png);
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* Contenedor centrado para el login */
+        #contenedorcentrado {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 90%;
+            max-width: 900px;
+            background-color: #5f6769;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Estilo del formulario de login */
+        #login {
+            background-color: #719192;
+            padding: 30px 30px 50px;
+            width: 100%;
+            max-width: 320px;
+            border-radius: 3px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        #login label {
+            display: block;
+            font-size: 1.2em;
+            color: #3c4245;
+            margin-top: 15px;
+        }
+
+        #login input {
+            font-size: 1.1em;
+            color: #1b262c;
+            width: 100%;
+            height: 40px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        #login input::placeholder {
+            color: #E4E4E4;
+        }
+
+        #login button {
+            background-color: #dfcdc3;
+            font-size: 1.1em;
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        #login button:hover {
+            background-color: #3c4245;
+            color: #dfcdc3;
+        }
+
+        /* Estilos para la columna derecha */
+        #derecho {
+            text-align: center;
+            width: 100%;
+            opacity: 0.7;
+            padding: 20px;
+        }
+
+        .titulo {
+            font-size: 3em;
+            color: #dfcdc3;
+        }
+
+        .logo-empresa img {
+            width: 60%;
+        }
+
+        hr {
+            border-top: 1px solid #8c8b8b;
+            border-bottom: 1px solid #dfcdc3;
+        }
+
+        .pie-form {
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .pie-form a {
+            display: block;
+            text-decoration: none;
+            color: #dfcdc3;
+            margin-bottom: 3px;
+        }
+
+        .pie-form a:hover {
+            color: #719192;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 775px) {
+            #contenedorcentrado {
+                flex-direction: column-reverse;
+            }
+
+            #login {
+                margin: 0 auto;
+            }
+
+            #derecho {
+                padding: 20px;
+            }
+
+            #login label {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="contenedor">
+    <div id="contenedorcentrado">
+        <!-- Formulario de login -->
+        <div id="login">
+            <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+              
+
+                <input type="submit" name="" value="ingresar">
+            </form>
+        </div>
+
+        <!-- Información adicional -->
+        <div id="derecho">
+            <div class="titulo">
+                <img src="../../assets/images/FUNYAJ/login1.png" alt="Logo Empresa" width="100%">
+            </div>
+            <div class="pie-form">
+                <hr>
+                <a href="/index/">« Regresar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
