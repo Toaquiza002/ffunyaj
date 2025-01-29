@@ -131,3 +131,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'byron.toaquiza2645@utc.edu.ec'
 EMAIL_HOST_PASSWORD = 'vzpt vyir vfsz kddi'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

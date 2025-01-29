@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.db.models import Count, Sum
 from django.db.models.functions import TruncMonth
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 
 @csrf_exempt
@@ -135,6 +136,7 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 #Admin
+@login_required
 def administrador(request):
     return render(request,'administrador.html')
 #Postulantes
@@ -478,3 +480,7 @@ def editar_voluntariado(request, id):
 def listadmin(request):
     adminBdd=Administrador.objects.all()
     return render(request,'listadmin.html',{'admin':adminBdd})
+
+def salir(request):
+    logout(request)
+    return redirect('/')

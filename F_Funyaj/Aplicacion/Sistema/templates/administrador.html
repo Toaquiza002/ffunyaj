@@ -1,460 +1,190 @@
-
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-  <!-- Importacion de jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Incluir el CSS de iziToast -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iziToast/dist/css/iziToast.min.css">
+    <!-- Importación de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-	<!-- Incluir el JS de iziToast -->
-	<script src="https://cdn.jsdelivr.net/npm/iziToast/dist/js/iziToast.min.js"></script>
-<link rel="stylesheet" href="{% static 'css/principal.css' %}">
-<!-- Importacion de jquery-validate -->
-<script type="text/javascript"
-src="{% static 'librerias/jquery-validate/jquery.validate.js' %}">
-</script>
+    <!-- Incluir el CSS de iziToast -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iziToast/dist/css/iziToast.min.css">
+    <!-- Incluir el JS de iziToast -->
+    <script src="https://cdn.jsdelivr.net/npm/iziToast/dist/js/iziToast.min.js"></script>
 
-  <!-- IMPORTANDO fontawasome-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/principal.css' %}">
 
-<!-- Importacion de sweetalert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.all.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.min.css">
+    <!-- Importación de jquery-validate -->
+    <script type="text/javascript" src="{% static 'librerias/jquery-validate/jquery.validate.js' %}"></script>
 
-<!-- Importacion de DataTables -->
-<link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js">
-</script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js">
-</script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
-</script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js">
-</script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
-</script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
-</script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js">
-</script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js">
-</script>
+    <!-- IMPORTANDO fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Importación de sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.2/dist/sweetalert2.min.css">
 
-  <title>Fundación FUNYAJ</title>
+    <!-- Importación de DataTables -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 
-  <link rel="icon" type="image/x-icon" href="../assets/images/FUNYAJ/icono.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="../assets/administrador/css/datatable.css">
-	<link href="../assets/administrador/css/app.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Fundación FUNYAJ</title>
+    <link rel="icon" type="image/x-icon" href="../assets/images/FUNYAJ/icono.png" />
+    <link rel="stylesheet" href="../assets/administrador/css/datatable.css">
+    <link href="../assets/administrador/css/app.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<div class="wrapper">
-		<nav id="sidebar" class="sidebar js-sidebar">
-			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="/dashboard/">
-        <img src="../assets/images/FUNYAJ/logo.png" alt="" height="75px" width="100%">
-        </a>
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="/dashboard/">
+                    <img src="../assets/images/FUNYAJ/logo.png" alt="" height="75px" width="100%">
+                </a>
 
-				<ul class="sidebar-nav">
-					<li class="sidebar-header">
-						Análisis
-					</li>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">Análisis</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/dashboard/">
+                            <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-header active">Reportes</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/listpostulantes/">
+                            <i class="fa-solid fa-address-card"></i> <span class="align-middle">Postulantes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/listuniversidad/">
+                            <i class="fa-solid fa-building-columns"></i> <span class="align-middle">Universidades</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/listestudientes/">
+                            <i class="fa-sharp fa-solid fa-chalkboard-user"></i> <span class="align-middle">Estudiantes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/historialacademico/">
+                            <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Historial Academico</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/pagos/">
+                            <i class="fa-solid fa-circle-dollar-to-slot"></i> <span class="align-middle">Pagos</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-header">Contribuciones</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/listcooperante/">
+                            <i class="fa-solid fa-users"></i> <span class="align-middle">Cooperantes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/listsocio/">
+                            <i class="fa-solid fa-handshake"></i> <span class="align-middle">Socios</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/voluntariado/">
+                            <i class="fa-solid fa-hand"></i> <span class="align-middle">Voluntariados</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/listadmin/">
+                            <i class="fa-solid fa-user-tie"></i> <span class="align-middle">Administrador</span>
+                        </a>
+                    </li>
+                </ul>
+                <br><br><br>
+            </div>
+        </nav>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/dashboard/">
-              <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Dashboard</span>
-            </a>
-					</li>
-					<li class="sidebar-header active">
-						Reportes
-					</li>
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/listpostulantes/">
-              <i class="fa-solid fa-address-card"></i> <span class="align-middle">Postulantes</span>
-            </a>
-					</li>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="reloj">
+                                <span class="text-dark" id="current-date"></span>
+                            </a>
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                <img src="../assets/images/FUNYAJ/icono.png" class="avatar img-fluid rounded me-1" alt="Funyaj" /> <span class="text-dark">Funyaj</span>
+                            </a>
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <img src="../assets/images/FUNYAJ/icono.png" class="avatar img-fluid rounded me-1" alt="Funyaj" /> <span class="text-dark">Funyaj</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="{% url 'salir' %}">Salir</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/listuniversidad/">
-              <i class="fa-solid fa-building-columns"></i> <span class="align-middle">Universidades</span>
-            </a>
-					</li>
+            <script>
+                // Función para obtener y mostrar solo la fecha con el mes con la primera letra en mayúscula
+                function updateDate() {
+                    const dateElement = document.getElementById("current-date");
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/listestudientes/">
-              <i class="fa-sharp fa-solid fa-chalkboard-user"></i> <span class="align-middle">Estudiantes</span>
-            </a>
-					</li>
+                    const currentDate = new Date();
+                    const day = currentDate.getDate();
+                    const month = currentDate.toLocaleString('es-ES', { month: 'long' }).replace(/^(\w)/, match => match.toUpperCase());
+                    const year = currentDate.getFullYear();
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/historialacademico/">
-              <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Historial Academico</span>
-            </a>
-					</li>
+                    // Construir la fecha manualmente
+                    dateElement.innerText = `Ecuador, ${day} de ${month} de ${year}`;
+                }
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/pagos/">
-               <i class="fa-solid fa-circle-dollar-to-slot"></i> <span class="align-middle">Pagos</span>
-            </a>
-					</li>
+                // Llama la función para actualizar la fecha al cargar la página
+                updateDate();
+            </script>
 
-					<li class="sidebar-header">
-						Contribuciones
-					</li>
+            {% block contenido %}
+            {% endblock %}
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/listcooperante/">
-              <i class="fa-solid fa-users"></i> <span class="align-middle">Cooperantes</span>
-            </a>
-					</li>
+            <script src="../assets/administrador/js/app.js"></script>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/listsocio/">
-              <i class="fa-solid fa-handshake"></i> <span class="align-middle">Socios</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/voluntariado/">
-               <i class="fa-solid fa-hand"></i> <span class="align-middle"> Voluntariados</span>
-            </a>
-					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/listadmin/">
-              <i class="fa-solid fa-user-tie"></i> <span class="align-middle">Administrador</span>
-            </a>
-					</li>
-				</ul>
-<br><br><br>
-
-			</div>
-		</nav>
-
-		<div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg">
-				<a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
-
-				<div class="navbar-collapse collapse">
-					<ul class="navbar-nav navbar-align">
-						<li class="nav-item dropdown">
-							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-								<div class="position-relative">
-
-								</div>
-							</a>
-							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-								<div class="dropdown-menu-header">
-
-
-
-								<div class="dropdown-menu-footer">
-								</div>
-							</div>
-						</li>
-
-						<li class="nav-item dropdown">
-              <a class="reloj">
-                <span class="text-dark" id="current-date"></span>
-              </a>
-							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-                <i class="align-middle" data-feather="settings"></i>
-              </a>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="../assets/images/FUNYAJ/icono.png" class="avatar img-fluid rounded me-1" alt="Funyaj" /> <span class="text-dark">Rodrigo Ilaquiche</span>
-              </a>
-              &nbsp;&nbsp;
-							<div class="dropdown-menu dropdown-menu-end">
-								
-								<a class="dropdown-item" href="/index/">Log out</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</nav>
-  <script>
-    // Función para obtener y mostrar solo la fecha con el mes con la primera letra en mayúscula
-    function updateDate() {
-      const dateElement = document.getElementById("current-date");
-
-      const currentDate = new Date();
-      const day = currentDate.getDate();
-      const month = currentDate.toLocaleString('es-ES', { month: 'long' }).replace(/^(\w)/, match => match.toUpperCase());
-      const year = currentDate.getFullYear();
-
-      // Construir la fecha manualmente
-      dateElement.innerText = `Ecuador, ${day} de ${month} de ${year}`;
-    }
-
-    // Llama la función para actualizar la fecha al cargar la página
-    updateDate();
-  </script>
-
-
-{% block contenido %}
-{% endblock %}
-<script src="../assets/administrador/js/app.js"></script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
-    var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-    gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-    gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-    // Line chart
-    new Chart(document.getElementById("chartjs-dashboard-line"), {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Sales ($)",
-          fill: true,
-          backgroundColor: gradient,
-          borderColor: window.theme.primary,
-          data: [
-            2115,
-            1562,
-            1584,
-            1892,
-            1587,
-            1923,
-            2566,
-            2448,
-            2805,
-            3438,
-            2917,
-            3327
-          ]
-        }]
-      },
-      options: {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        tooltips: {
-          intersect: false
-        },
-        hover: {
-          intersect: true
-        },
-        plugins: {
-          filler: {
-            propagate: false
-          }
-        },
-        scales: {
-          xAxes: [{
-            reverse: true,
-            gridLines: {
-              color: "rgba(0,0,0,0.0)"
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              stepSize: 1000
-            },
-            display: true,
-            borderDash: [3, 3],
-            gridLines: {
-              color: "rgba(0,0,0,0.0)"
-            }
-          }]
-        }
-      }
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Pie chart
-    new Chart(document.getElementById("chartjs-dashboard-pie"), {
-      type: "pie",
-      data: {
-        labels: ["Chrome", "Firefox", "IE"],
-        datasets: [{
-          data: [4306, 3801, 1689],
-          backgroundColor: [
-            window.theme.primary,
-            window.theme.warning,
-            window.theme.danger
-          ],
-          borderWidth: 5
-        }]
-      },
-      options: {
-        responsive: !window.MSInputMethodContext,
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        cutoutPercentage: 75
-      }
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Bar chart
-    new Chart(document.getElementById("chartjs-dashboard-bar"), {
-      type: "bar",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "This year",
-          backgroundColor: window.theme.primary,
-          borderColor: window.theme.primary,
-          hoverBackgroundColor: window.theme.primary,
-          hoverBorderColor: window.theme.primary,
-          data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-          barPercentage: .75,
-          categoryPercentage: .5
-        }]
-      },
-      options: {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        scales: {
-          yAxes: [{
-            gridLines: {
-              display: false
-            },
-            stacked: false,
-            ticks: {
-              stepSize: 20
-            }
-          }],
-          xAxes: [{
-            stacked: false,
-            gridLines: {
-              color: "transparent"
-            }
-          }]
-        }
-      }
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var markers = [{
-        coords: [31.230391, 121.473701],
-        name: "Shanghai"
-      },
-      {
-        coords: [28.704060, 77.102493],
-        name: "Delhi"
-      },
-      {
-        coords: [6.524379, 3.379206],
-        name: "Lagos"
-      },
-      {
-        coords: [35.689487, 139.691711],
-        name: "Tokyo"
-      },
-      {
-        coords: [23.129110, 113.264381],
-        name: "Guangzhou"
-      },
-      {
-        coords: [40.7127837, -74.0059413],
-        name: "New York"
-      },
-      {
-        coords: [34.052235, -118.243683],
-        name: "Los Angeles"
-      },
-      {
-        coords: [41.878113, -87.629799],
-        name: "Chicago"
-      },
-      {
-        coords: [51.507351, -0.127758],
-        name: "London"
-      },
-      {
-        coords: [40.416775, -3.703790],
-        name: "Madrid "
-      }
-    ];
-    var map = new jsVectorMap({
-      map: "world",
-      selector: "#world_map",
-      zoomButtons: true,
-      markers: markers,
-      markerStyle: {
-        initial: {
-          r: 9,
-          strokeWidth: 7,
-          stokeOpacity: .4,
-          fill: window.theme.primary
-        },
-        hover: {
-          fill: window.theme.primary,
-          stroke: window.theme.primary
-        }
-      },
-      zoomOnScroll: false
-    });
-    window.addEventListener("resize", () => {
-      map.updateSize();
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-    var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
-    document.getElementById("datetimepicker-dashboard").flatpickr({
-      inline: true,
-      prevArrow: "<span title=\"Previous month\">&laquo;</span>",
-      nextArrow: "<span title=\"Next month\">&raquo;</span>",
-      defaultDate: defaultDate
-    });
-  });
-</script>
-
-
-  {% if messages %}
-      {% for mensaje in messages %}
-      <script type="text/javascript">
-       //alert('{{mensaje}}');
-       iziToast.success({
-          title: '¡HECHO!',
-          message: '{{mensaje}}',
-          position:'topRight'
-      });
-    </script>
-      {% endfor %}
-
-  {% endif %}
+            {% if messages %}
+                {% for mensaje in messages %}
+                    <script type="text/javascript">
+                        iziToast.success({
+                            title: '¡HECHO!',
+                            message: '{{ mensaje }}',
+                            position: 'topRight'
+                        });
+                    </script>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 </body>
 
 </html>

@@ -2,10 +2,12 @@ from django.urls import path
 from . import views
 from .views import enviar_formulario
 from .views import index, dashboard
+from django.contrib.auth import views as auth_views
+
 
 
 urlpatterns=[
-    
+
 #VistaPrevia
     path('',views.index, name='index'),
     path('index/',views.index, name='index'),
@@ -108,5 +110,10 @@ urlpatterns=[
     path('listadmin/',views.listadmin, name='listadmin'),
 
     path('dashboard/', views.dashboard, name='dashboard'),
+    path ('salir/', views.salir, name='salir'),
+     path('reset/password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('reset/password_reset_done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
 ]
